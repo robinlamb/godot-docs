@@ -193,7 +193,7 @@ Creating the controllers
 .. image:: img/starter_vr_tutorial_hands.png
 
 Right now all that the VR user can do is stand around, which isn't really what we are going for unless we are working on a VR film. Lets write the code for the
-VR controllers. We are going to write all of the code for the VR controllers in one go, so the code is rather long. That said, once we are finished you will be
+VR controllers. We are going to write all the code for the VR controllers in one go, so the code is rather long. That said, once we are finished you will be
 able to teleport around the scene, artificially move using the touchpad/joystick on the VR controller, and be able to pick up, drop, and throw
 :ref:`RigidBody <class_RigidBody>`-based nodes.
 
@@ -244,7 +244,7 @@ the same script, so it doesn't matter which you use first. With ``VR_Controller.
 
 .. tip:: You can copy and paste the code from this page directly into the script editor.
          
-         If you do this, all of the code copied will be using spaces instead of tabs.
+         If you do this, all the code copied will be using spaces instead of tabs.
 
          To convert the spaces to tabs in the script editor, click the ``Edit`` menu and select ``Convert Indent To Tabs``.
          This will convert all the spaces into tabs. You can select ``Convert Indent To Spaces`` to convert tabs back into spaces.
@@ -275,7 +275,7 @@ the same script, so it doesn't matter which you use first. With ``VR_Controller.
     var teleport_raycast
 
     # A constant to define the dead zone for both the trackpad and the joystick.
-    # See (http://www.third-helix.com/2013/04/12/doing-thumbstick-dead-zones-right.html)
+    # See https://web.archive.org/web/20191208161810/http://www.third-helix.com/2013/04/12/doing-thumbstick-dead-zones-right.html
     # for more information on what dead zones are, and how we are using them in this project.
     const CONTROLLER_DEADZONE = 0.65
 
@@ -542,7 +542,7 @@ This is quite a bit of code to go through. Let's go through what the code does s
 Explaining the VR controller code
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-First, let's go through all of the class variables in the script:
+First, let's go through all the class variables in the script:
 
 * ``controller_velocity``: A variable to hold a rough approximation of the VR controller's velocity.
 * ``prior_controller_position``: A variable to hold the VR controller's last position in 3D space.
@@ -564,7 +564,7 @@ First, let's go through all of the class variables in the script:
 * ``CONTROLLER_RUMBLE_FADE_SPEED``: A constant to define how fast the VR controller rumble fades.
 * ``directional_movement``: A variable to hold whether this VR controller is moving the player using the touchpad/joystick.
 
-.. note:: You can find a great article explaining all about how to handle touchpad/joystick dead zones here: http://www.third-helix.com/2013/04/12/doing-thumbstick-dead-zones-right.html
+.. note:: You can find a great article explaining all about how to handle touchpad/joystick dead zones `here <https://web.archive.org/web/20191208161810/http://www.third-helix.com/2013/04/12/doing-thumbstick-dead-zones-right.html>`__.
           
           We are using a translated version of the scaled radial dead zone code provided in that article for the VR controller's joystick/touchpad.
           The article is a great read, and I highly suggest giving it a look!
@@ -653,7 +653,7 @@ This section of code will keep the held object in the same position and rotation
 
 _________________
 
-Finally, the last section of code simply calls the ``_physics_process_directional_movement`` function. This function contains all of the code for moving the player when the
+Finally, the last section of code simply calls the ``_physics_process_directional_movement`` function. This function contains all the code for moving the player when the
 touchpad/joystick on the VR controller moves.
 
 
@@ -704,8 +704,6 @@ First this function gets the axes for the trackpad and the joystick and assigns 
 
 Then ``trackpad_vector`` and ``joystick_vector`` have their deadzones account for. The code for this is detailed in the article below, with slight changes as the code is converted from
 C# to GDScript.
-
-.. note:: You can find a great article explaining all about how to handle touchpad/joystick dead zones here: http://www.third-helix.com/2013/04/12/doing-thumbstick-dead-zones-right.html
 
 Once the ``trackpad_vector`` and ``joystick_vector`` variables have had their deadzones account for, the code then gets the forward and right direction vectors relative to the
 global transform of the :ref:`ARVRCamera <class_ARVRCamera>`. What this does is that it gives us vectors that point forward and right relative to the rotation of the user camera,

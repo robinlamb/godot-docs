@@ -79,7 +79,7 @@ In ``process_input``, add the following code just before ``input_movement_vector
 
         if OS.get_name() == "Windows":
             joypad_vec = Vector2(Input.get_joy_axis(0, 0), -Input.get_joy_axis(0, 1))
-        elif OS.get_name() == "X11":
+        elif OS.get_name() == "Linux":
             joypad_vec = Vector2(Input.get_joy_axis(0, 1), Input.get_joy_axis(0, 2))
         elif OS.get_name() == "OSX":
             joypad_vec = Vector2(Input.get_joy_axis(0, 1), Input.get_joy_axis(0, 2))
@@ -98,7 +98,7 @@ In ``process_input``, add the following code just before ``input_movement_vector
 
         var joypad_vec = Vector2(0, 0)
 
-        if OS.get_name() == "Windows" or OS.get_name() == "X11":
+        if OS.get_name() == "Windows" or OS.get_name() == "Linux":
             joypad_vec = Vector2(Input.get_joy_axis(0, 0), -Input.get_joy_axis(0, 1))
         elif OS.get_name() == "OSX":
             joypad_vec = Vector2(Input.get_joy_axis(0, 1), Input.get_joy_axis(0, 2))
@@ -125,8 +125,8 @@ the OS.
 Next, we check to see if the joypad vector length is within the ``JOYPAD_DEADZONE`` radius.
 If it is, we set ``joypad_vec`` to an empty Vector2. If it is not, we use a scaled Radial Dead zone for precise dead zone calculation.
 
-.. note:: You can find a great article explaining all about how to handle joypad/controller dead zones here:
-          http://www.third-helix.com/2013/04/12/doing-thumbstick-dead-zones-right.html
+.. note:: You can find a great article explaining all about how to handle joypad/controller dead zones
+          `here <https://web.archive.org/web/20191208161810/http://www.third-helix.com/2013/04/12/doing-thumbstick-dead-zones-right.html>`__.
 
           We're using a translated version of the scaled radial dead zone code provided in that article.
           The article is a great read, and I highly suggest giving it a look!
@@ -159,7 +159,7 @@ Make a new function called ``process_view_input`` and add the following:
 
             if OS.get_name() == "Windows":
                 joypad_vec = Vector2(Input.get_joy_axis(0, 2), Input.get_joy_axis(0, 3))
-            elif OS.get_name() == "X11":
+            elif OS.get_name() == "Linux":
                 joypad_vec = Vector2(Input.get_joy_axis(0, 3), Input.get_joy_axis(0, 4))
             elif OS.get_name() == "OSX":
                 joypad_vec = Vector2(Input.get_joy_axis(0, 3), Input.get_joy_axis(0, 4))
@@ -194,7 +194,7 @@ Make a new function called ``process_view_input`` and add the following:
         var joypad_vec = Vector2()
         if Input.get_connected_joypads().size() > 0:
 
-            if OS.get_name() == "Windows" or OS.get_name() == "X11":
+            if OS.get_name() == "Windows" or OS.get_name() == "Linux":
                 joypad_vec = Vector2(Input.get_joy_axis(0, 2), Input.get_joy_axis(0, 3))
             elif OS.get_name() == "OSX":
                 joypad_vec = Vector2(Input.get_joy_axis(0, 3), Input.get_joy_axis(0, 4))
@@ -303,7 +303,7 @@ We then check to see if the player is changing weapons or reloading. If the play
           we would get an error when we tried to run the project.
 
 Next, we check to see if the weapon name at ``round_mouse_scroll_value`` is not equal to the current weapon name using ``WEAPON_NUMBER_TO_NAME``.
-If the weapon is different than the player's current weapon, we assign ``changing_weapon_name``, set ``changing_weapon`` to ``true`` so the player will change weapons in
+If the weapon is different from the player's current weapon, we assign ``changing_weapon_name``, set ``changing_weapon`` to ``true`` so the player will change weapons in
 ``process_changing_weapon``, and set ``mouse_scroll_value`` to ``round_mouse_scroll_value``.
 
 .. tip:: The reason we are setting ``mouse_scroll_value`` to the rounded scroll value is because we do not want the player to keep their
@@ -787,4 +787,3 @@ add turrets!
 .. warning:: If you ever get lost, be sure to read over the code again!
 
              You can download the finished project for this part here: :download:`Godot_FPS_Part_4.zip <files/Godot_FPS_Part_4.zip>`
-

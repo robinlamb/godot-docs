@@ -1,0 +1,33 @@
+os: linux
+dist: bionic
+language: python
+
+python:
+  - "3.8"
+
+stages:
+  - build
+
+matrix:
+  include:
+    - name: Static checks (format.sh) + Sphinx build
+      stage: build
+      os: linux
+      addons:
+        apt:
+          packages:
+            - dos2unix
+            - recode
+            - texlive-full
+
+script:
+  - bash ./format.sh
+
+  # Check for possible typos
+  - pip install codespell
+  - codespell -I codespell-ignore.txt {about,community,development,getting_started,tutorials}/**/*.rst
+
+  - pip install -r requirements.txt
+  # TODO: Add `-W` to turn warnings into errors.
+  # This can only be done once all warnings have been fixed.
+  - sphinx-build --color -b html -d _build/doctrees . _build/html

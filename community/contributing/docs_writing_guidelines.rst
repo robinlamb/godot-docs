@@ -425,7 +425,7 @@ For boolean member variables, always use ``if true`` and/or
 ``if false``, to stay explicit. ``Controls whether or not`` may be
 ambiguous and won't work for every member variable.
 
-Also surround boolean values, variable names and methods with ``[code][/code]``.
+Also, surround boolean values, variable names and methods with ``[code][/code]``.
 
 **Do** start with "if true":
 
@@ -506,7 +506,7 @@ important guidelines to follow.
 First, you should always be using the default editor theme and text when taking
 screenshots.
 
-To improve the apperance of 3D screenshots, use 4× MSAA, enable anisotropic
+To improve the appearance of 3D screenshots, use 4× MSAA, enable anisotropic
 filtering on the project's textures, and set the anisotropic filter quality to
 16× in Project Settings.
 

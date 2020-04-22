@@ -694,9 +694,9 @@ If the currently loaded/open scene is ``Testing_Area.tscn``, we'd be adding our 
 .. warning:: As mentioned later below in the section on adding sounds, this method makes an assumption. This will be explained later
              in the section on adding sounds in :ref:`doc_fps_tutorial_part_three`
 
-Next we set the global transform of the clone to the ``Pistol_Aim_Point``'s global transform. The reason we do this is so the bullet is spawned at the end of the pistol.
+Next we set the global transform of the clone to the ``Pistol_Point``'s global transform. The reason we do this is so the bullet is spawned at the end of the pistol.
 
-You can see that ``Pistol_Aim_Point`` is positioned right at the end of the pistol by clicking the :ref:`AnimationPlayer <class_AnimationPlayer>` and
+You can see that ``Pistol_Point`` is positioned right at the end of the pistol by clicking the :ref:`AnimationPlayer <class_AnimationPlayer>` and
 scrolling through ``Pistol_fire``. You'll find the position is more or less at the end of the pistol when it fires.
 
 Next we scale it up by a factor of ``4`` because the bullet scene is a little too small by default.
@@ -1164,7 +1164,7 @@ Then we tell the current weapon the player is using to fire by calling its ``fir
 
 _______
 
-Before we are ready to test our new weapons, we still have a little bit of work to do.
+Before we are ready to test our new weapons, we still have a bit of work to do.
 
 Creating some test subjects
 ---------------------------

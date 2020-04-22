@@ -3,6 +3,8 @@
 Contribute to the Class Reference
 =================================
 
+.. highlight:: shell
+
 Godot ships with many nodes and singletons to help you develop your games. Each is a class, documented in the :ref:`class reference <toc-class-ref>`.
 This reference is essential for anyone learning the engine: it is available both online and in the engine.
 
@@ -52,7 +54,7 @@ Clone the repository on your computer:
 
     git clone https://github.com/your_name/godot.git
 
-Create a new branch to make your changes. It makes it a lot easier to sync your improvements with other docs writers, and it's easier to cleanup your repository clean if you have any issues with git.
+Create a new branch to make your changes. It makes it a lot easier to sync your improvements with other docs writers. It's also easier to clean up your repository if you run into any issues with Git.
 
 ::
 
@@ -104,7 +106,7 @@ If you made changes you don't want to keep in your local branch, use the followi
 
 **Warning:** The above command will reset your branch to the state of the ``upstream master`` branch. It will discard all local changes. Make sure to only run this *before* you make important changes.
 
-Another option is to delete the branch you're working on, synchronize the master branch with the Godot repository, and create a brand new branch:
+Another option is to delete the branch you're working on, synchronize the master branch with the Godot repository, and create a new branch:
 
 ::
 
@@ -122,7 +124,7 @@ When classes are modified in the source code, the documentation template might b
 
 ::
 
-    ./bin/godot.x11.tools.64 --doctool .
+    ./bin/godot.linuxbsd.tools.64 --doctool .
 
 The xml files in doc/classes should then be up-to-date with current Godot Engine features. You can then check what changed using the ``git diff`` command. If there are changes to other classes than the one you are planning to document, please commit those changes first before starting to edit the template:
 
@@ -255,7 +257,7 @@ Godot's class reference supports BBcode-like tags. They add nice formatting to t
 
 Use ``[codeblock]`` for pre-formatted code blocks. Inside ``[codeblock]``, always use **four spaces** for indentation (the parser will delete tabs). Example:
 
-.. code-block:: xml
+.. code-block:: none
 
     [codeblock]
     func _ready():
@@ -265,7 +267,7 @@ Use ``[codeblock]`` for pre-formatted code blocks. Inside ``[codeblock]``, alway
 
 Will display as:
 
-::
+.. code-block:: gdscript
 
     func _ready():
         var sprite = get_node("Sprite")

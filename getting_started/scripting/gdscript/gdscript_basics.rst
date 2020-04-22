@@ -16,34 +16,10 @@ flexibility for content creation and integration.
 History
 ~~~~~~~
 
-In the early days, the engine used the `Lua <https://www.lua.org>`__
-scripting language. Lua is fast, but creating bindings to an object
-oriented system (by using fallbacks) was complex and slow and took an
-enormous amount of code. After some experiments with
-`Python <https://www.python.org>`__, it also proved difficult to embed.
+.. note::
 
-The last third party scripting language that was used for shipped games
-was `Squirrel <http://squirrel-lang.org>`__, but it was dropped as well.
-At that point, it became evident that a custom scripting language could
-more optimally make use of Godot's particular architecture:
-
--  Godot embeds scripts in nodes. Most languages are not designed with
-   this in mind.
--  Godot uses several built-in data types for 2D and 3D math. Script
-   languages do not provide this, and binding them is inefficient.
--  Godot uses threads heavily for lifting and initializing data from the
-   net or disk. Script interpreters for common languages are not
-   friendly to this.
--  Godot already has a memory management model for resources, most
-   script languages provide their own, which results in duplicate
-   effort and bugs.
--  Binding code is always messy and results in several failure points,
-   unexpected bugs and generally low maintainability.
-
-The result of these considerations is *GDScript*. The language and
-interpreter for GDScript ended up being smaller than the binding code itself
-for Lua and Squirrel, while having equal functionality. With time, having a
-built-in language has proven to be a huge advantage.
+    Documentation about GDScript's history has been moved to the
+    :ref:`Frequently Asked Questions <doc_faq_what_is_gdscript>`.
 
 Example of GDScript
 ~~~~~~~~~~~~~~~~~~~
@@ -339,7 +315,7 @@ Built-in types
 Built-in types are stack-allocated. They are passed as values. This means a copy
 is created on each assignment or when passing them as arguments to functions.
 The only exceptions are ``Array``\ s and ``Dictionaries``, which are passed by
-reference so they are shared. (Pooled arrays such as ``PoolByteArray`` are still
+reference so they are shared. (Pooled arrays such as ``PackedByteArray`` are still
 passed as values.)
 
 Basic built-in types
@@ -370,7 +346,7 @@ It is stored as a 64-bit value, equivalent to "int64_t" in C++.
 Stores real numbers, including decimals, using floating-point values.
 It is stored as a 64-bit value, equivalent to "double" in C++.
 Note: Currently, data structures such as Vector2, Vector3, and
-PoolRealArray store 32-bit single-precision "float" values.
+PackedFloat32Array store 32-bit single-precision "float" values.
 
 :ref:`String <class_String>`
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -490,13 +466,15 @@ arrays are available. These only accept a single data type. They avoid memory
 fragmentation and use less memory, but are atomic and tend to run slower than generic
 arrays. They are therefore only recommended to use for large data sets:
 
-- :ref:`PoolByteArray <class_PoolByteArray>`: An array of bytes (integers from 0 to 255).
-- :ref:`PoolIntArray <class_PoolIntArray>`: An array of integers.
-- :ref:`PoolRealArray <class_PoolRealArray>`: An array of floats.
-- :ref:`PoolStringArray <class_PoolStringArray>`: An array of strings.
-- :ref:`PoolVector2Array <class_PoolVector2Array>`: An array of :ref:`Vector2 <class_Vector2>` objects.
-- :ref:`PoolVector3Array <class_PoolVector3Array>`: An array of :ref:`Vector3 <class_Vector3>` objects.
-- :ref:`PoolColorArray <class_PoolColorArray>`: An array of :ref:`Color <class_Color>` objects.
+- :ref:`PackedByteArray <class_PackedByteArray>`: An array of bytes (integers from 0 to 255).
+- :ref:`PackedInt32Array <class_PackedInt32Array>`: An array of 32-bit integers.
+- :ref:`PackedInt64Array <class_PackedInt64Array>`: An array of 64-bit integers.
+- :ref:`PackedFloat32Array <class_PackedFloat32Array>`: An array of 32-bit floats.
+- :ref:`PackedFloat64Array <class_PackedFloat64Array>`: An array of 64-bit floats.
+- :ref:`PackedStringArray <class_PackedStringArray>`: An array of strings.
+- :ref:`PackedVector2Array <class_PackedVector2Array>`: An array of :ref:`Vector2 <class_Vector2>` objects.
+- :ref:`PackedVector3Array <class_PackedVector3Array>`: An array of :ref:`Vector3 <class_Vector3>` objects.
+- :ref:`PackedColorArray <class_PackedColorArray>`: An array of :ref:`Color <class_Color>` objects.
 
 :ref:`Dictionary <class_Dictionary>`
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -516,8 +494,8 @@ Associative container which contains values referenced by unique keys.
 
 Lua-style table syntax is also supported. Lua-style uses ``=`` instead of ``:``
 and doesn't use quotes to mark string keys (making for slightly less to write).
-Note however that like any GDScript identifier, keys written in this form cannot
-start with a digit.
+However, keys written in this form can't start with a digit (like any GDScript
+identifier).
 
 ::
 
@@ -1434,7 +1412,7 @@ Our ``BattleLog`` node receives each element in the binds array as an extra argu
     func _on_Character_health_changed(old_value, new_value, character_name):
         if not new_value <= old_value:
             return
-            
+
         var damage = old_value - new_value
         label.text += character_name + " took " + str(damage) + " damage."
 

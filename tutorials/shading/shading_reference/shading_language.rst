@@ -46,13 +46,13 @@ Most GLSL ES 3.0 datatypes are supported:
 +---------------------+---------------------------------------------------------------------------------+
 | **uvec4**           | Four-component vector of unsigned integers.                                     |
 +---------------------+---------------------------------------------------------------------------------+
-| **float**           | Floating point scalar.                                                          |
+| **float**           | Floating-point scalar.                                                          |
 +---------------------+---------------------------------------------------------------------------------+
-| **vec2**            | Two-component vector of floating point values.                                  |
+| **vec2**            | Two-component vector of floating-point values.                                  |
 +---------------------+---------------------------------------------------------------------------------+
-| **vec3**            | Three-component vector of floating point values.                                |
+| **vec3**            | Three-component vector of floating-point values.                                |
 +---------------------+---------------------------------------------------------------------------------+
-| **vec4**            | Four-component vector of floating point values.                                 |
+| **vec4**            | Four-component vector of floating-point values.                                 |
 +---------------------+---------------------------------------------------------------------------------+
 | **mat2**            | 2x2 matrix, in column major order.                                              |
 +---------------------+---------------------------------------------------------------------------------+
@@ -294,7 +294,7 @@ Global constants are useful when you want to have access to a value throughout y
 Structs
 -------
 
-Structs are compound types which can be used for better abstaction of shader code. You can declare them at the global scope like:
+Structs are compound types which can be used for better abstraction of shader code. You can declare them at the global scope like:
 
 .. code-block:: glsl
 

@@ -1,7 +1,7 @@
-.. _doc_compiling_for_x11:
+.. _doc_compiling_for_linuxbsd:
 
-Compiling for X11 (Linux, \*BSD)
-================================
+Compiling for Linux, \*BSD
+==========================
 
 .. highlight:: shell
 
@@ -11,16 +11,20 @@ Requirements
 For compiling under Linux or other Unix variants, the following is
 required:
 
--  GCC or Clang
--  Python 3.5+
--  SCons build system (3.0 or later for Python 3)
--  pkg-config (used to detect the dependencies below)
--  X11, Xcursor, Xinerama, Xi and XRandR development libraries
--  MesaGL development libraries
--  ALSA development libraries
--  PulseAudio development libraries
--  *Optional* - libudev (build with ``udev=yes``)
--  *Optional* - yasm (for WebM SIMD optimizations)
+-  GCC 7+ or Clang 6+.
+-  Python 3.5+.
+-  SCons 3.0+ build system. If your distribution uses Python 2 by default,
+   or you are using a version of SCons prior to 3.1.2, you will need to change
+   the version of Python that SCons uses by changing the shebang (the first line)
+   of the SCons script file to ``#! /usr/bin/python3``.
+   Use the command ``which scons`` to find the location of the SCons script file.
+-  pkg-config (used to detect the dependencies below).
+-  X11, Xcursor, Xinerama, Xi and XRandR development libraries.
+-  MesaGL development libraries.
+-  ALSA development libraries.
+-  PulseAudio development libraries.
+-  *Optional* - libudev (build with ``udev=yes``).
+-  *Optional* - yasm (for WebM SIMD optimizations).
 
 .. seealso:: For a general overview of SCons usage for Godot, see
              :ref:`doc_introduction_to_the_buildsystem`.
@@ -88,7 +92,7 @@ Start a terminal, go to the root dir of the engine source code and type:
 
 ::
 
-    user@host:~/godot$ scons -j8 platform=x11
+    user@host:~/godot$ scons -j8 platform=linuxbsd
 
 A good rule of thumb for the ``-j`` (*jobs*) flag, is to have at least as many
 threads compiling Godot as you have cores in your CPU, if not one or two more.
@@ -105,7 +109,7 @@ manager.
 
     ::
 
-        user@host:~/godot$ scons platform=x11 use_llvm=yes
+        user@host:~/godot$ scons platform=linuxbsd use_llvm=yes
 
     Using Clang appears to be a requirement for OpenBSD, otherwise fonts
     would not build.
@@ -119,6 +123,11 @@ manager.
           As link-time optimization is a memory-intensive process,
           this will require about 3 GB of available RAM while compiling.
 
+.. note:: If you want to use separate editor settings for your own Godot builds
+          and official releases, you can enable
+          :ref:`doc_data_paths_self_contained_mode` by creating a file called
+          ``._sc_`` or ``_sc_`` in the ``bin/`` folder.
+
 Building export templates
 -------------------------
 
@@ -130,22 +139,22 @@ Building export templates
              build environment.
 
 
-To build X11 (Linux, \*BSD) export templates, run the build system with the
+To build Linux or \*BSD export templates, run the build system with the
 following parameters:
 
 -  (32 bits)
 
 ::
 
-    user@host:~/godot$ scons platform=x11 tools=no target=release bits=32
-    user@host:~/godot$ scons platform=x11 tools=no target=release_debug bits=32
+    user@host:~/godot$ scons platform=linuxbsd tools=no target=release bits=32
+    user@host:~/godot$ scons platform=linuxbsd tools=no target=release_debug bits=32
 
 -  (64 bits)
 
 ::
 
-    user@host:~/godot$ scons platform=x11 tools=no target=release bits=64
-    user@host:~/godot$ scons platform=x11 tools=no target=release_debug bits=64
+    user@host:~/godot$ scons platform=linuxbsd tools=no target=release bits=64
+    user@host:~/godot$ scons platform=linuxbsd tools=no target=release_debug bits=64
 
 Note that cross-compiling for the opposite bits (64/32) as your host
 platform is not always straight-forward and might need a chroot environment.
@@ -156,7 +165,7 @@ To create standard export templates, the resulting files must be copied to:
 
     $HOME/.local/share/godot/templates/[gd-version]/
 
-and named like this (even for \*BSD which is seen as "Linux X11" by Godot):
+and named like this (even for \*BSD which is seen as "Linux/X11" by Godot):
 
 ::
 
@@ -188,7 +197,7 @@ the default GCC + GNU ld setup:
 To do so, install Clang and the ``lld`` package from your distribution's package manager
 then use the following SCons command::
 
-    user@host:~/godot$ scons platform=x11 use_llvm=yes use_lld=yes
+    user@host:~/godot$ scons platform=linuxbsd use_llvm=yes use_lld=yes
 
 It's still recommended to use GCC for production builds as they can be compiled using
 link-time optimization, making the resulting binaries smaller and faster.

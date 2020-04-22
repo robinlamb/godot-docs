@@ -81,7 +81,7 @@ Let's go over how this script works.
 Explaining the Sphere Target code
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-First, let's go through all of the class variables in the script:
+First, let's go through all the class variables in the script:
 
 * ``destroyed``: A variable to track whether the sphere target has been destroyed.
 * ``destroyed_timer``: A variable to track how long the sphere target has been destroyed.
@@ -98,7 +98,7 @@ First, let's go through all of the class variables in the script:
 """"""""""""""""""""""""""""""""""""""""""""
 
 All the ``_ready`` function does is that it stops the ``_physics_process`` from being called by calling ``set_physics_process`` and passing ``false``.
-The reason we do this is because all of the code in ``_physics_process`` is for destroying this node when enough time has passed, which we only want to
+The reason we do this is because all the code in ``_physics_process`` is for destroying this node when enough time has passed, which we only want to
 do when the target has been destroyed.
 
 
@@ -794,7 +794,7 @@ is not on any collision layers, and is instead only on a single collision mask. 
 We are going to use the ``Damage_Body`` :ref:`KinematicBody <class_KinematicBody>` node to detect the collision point and normal when the sword collides with something in the scene.
 
 .. tip:: While this is perhaps not the best way of getting the collision information from a performance point of view, it does give us a lot of information we can use for post-processing!
-         Using a :ref:`KinematicBody <class_KinematicBody>` this way means we can detect exactly where ths sword collided with other :ref:`PhysicsBody <class_PhysicsBody>` nodes.
+         Using a :ref:`KinematicBody <class_KinematicBody>` this way means we can detect exactly where the sword collided with other :ref:`PhysicsBody <class_PhysicsBody>` nodes.
 
 That is really the only thing note worthy about the sword scene. Select the ``Sword`` :ref:`RigidBody <class_RigidBody>` node and make a new script called ``Sword.gd``.
 Add the following code:
@@ -1033,4 +1033,3 @@ help serve as an introduction to making fully-featured VR games in Godot! The co
 story-based games, and more!
 
 .. warning:: You can download the finished project for this tutorial series on the `OpenVR GitHub repository <https://github.com/GodotVR/godot_openvr_fps>`_, under the releases tab!
-

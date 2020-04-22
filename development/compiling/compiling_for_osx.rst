@@ -10,8 +10,8 @@ Requirements
 
 For compiling under macOS, the following is required:
 
-- `Python 3.5+ <https://www.python.org>`_
-- `SCons <https://www.scons.org>`_ build system.
+- `Python 3.5+ <https://www.python.org>`_.
+- `SCons 3.0+ <https://www.scons.org>`_ build system.
 - `Xcode <https://apps.apple.com/us/app/xcode/id497799835>`_
   (or the more lightweight Command Line Tools for Xcode).
 - *Optional* - `yasm <https://yasm.tortall.net/>`_ (for WebM SIMD optimizations).
@@ -39,9 +39,14 @@ If all goes well, the resulting binary executable will be placed in the
 runs without any dependencies. Executing it will bring up the project
 manager.
 
-To create an .app like in the official builds, you need to use the template
-located in ``misc/dist/osx_tools.app``. Typically, for an optimized editor
-binary built with ``scons p=osx target=release_debug``::
+.. note:: If you want to use separate editor settings for your own Godot builds
+          and official releases, you can enable
+          :ref:`doc_data_paths_self_contained_mode` by creating a file called
+          ``._sc_`` or ``_sc_`` in the ``bin/`` folder.
+
+To create an ``.app`` bundle like in the official builds, you need to use the
+template located in ``misc/dist/osx_tools.app``. Typically, for an optimized
+editor binary built with ``scons p=osx target=release_debug``::
 
     user@host:~/godot$ cp -r misc/dist/osx_tools.app ./Godot.app
     user@host:~/godot$ mkdir -p Godot.app/Contents/MacOS

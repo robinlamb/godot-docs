@@ -124,12 +124,12 @@ When we do this, we get the desired result of rotating the object:
 
 .. image:: img/matrices_and_transforms/rotate1.png
 
-If you have trouble understanding the above, try this excercise:
+If you have trouble understanding the above, try this exercise:
 Cut a square of paper, draw X and Y vectors on top of it, place
 it on graph paper, then rotate it and note the endpoints.
 
 To perform rotation in code, we need to be able to calculate
-the values programatically. This image shows the formulas needed
+the values programmatically. This image shows the formulas needed
 to calculate the transformation matrix from a rotation angle.
 Don't worry if this part seems complicated, I promise it's the
 hardest thing you need to know.
@@ -583,7 +583,7 @@ How does it all work in 3D?
 
 One of the great things about transformation matrices is that they
 work very similarly between 2D and 3D transformations.
-All of the code and formulas used above for 2D work the same in 3D,
+All the code and formulas used above for 2D work the same in 3D,
 with 3 exceptions: the addition of a third axis, that each
 axis is of type :ref:`class_Vector3`, and also that Godot stores
 the :ref:`class_Basis` separately from the :ref:`class_Transform`,
@@ -625,7 +625,7 @@ how you represent rotation by itself without the basis vectors.
 With 2D, we have an easy way (atan2) to switch between a transformation
 matrix and an angle. In 3D, we can't simply represent rotation as one
 number. There is something called Euler angles, which can represent
-rotations as a set of 3 numbers, however they are limited and not very
+rotations as a set of 3 numbers, however, they are limited and not very
 useful, except for trivial cases.
 
 In 3D we do not typically use angles, we either use a transformation basis

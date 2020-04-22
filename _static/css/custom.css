@@ -21,6 +21,10 @@
     --navbar-level-2-color: #b8d6f0;
     --navbar-level-3-color: #a3c4e1;
     --navbar-heading-color: #ff7381;
+    --navbar-scrollbar-color: #d45a66;
+    --navbar-scrollbar-hover-color: #b14550;
+    --navbar-scrollbar-active-color: #72383e;
+    --navbar-scrollbar-background: #131e2b;
 
     --link-color: #2980b9;
     --link-color-hover: #3091d1;
@@ -44,6 +48,7 @@
     --search-credits-link-color: #4392c5; /* derived from --link-color */
 
     --highlight-background-color: #f5ffe1;
+    --highlight-default-color: #404040;
     --highlight-comment-color: #408090;
     --highlight-keyword-color: #007020;
     --highlight-keyword2-color: #902000;
@@ -100,6 +105,10 @@
         --navbar-level-2-color: #ccc;
         --navbar-level-3-color: #bbb;
         --navbar-heading-color: #ee7381;
+        --navbar-scrollbar-color: #be5460;
+        --navbar-scrollbar-hover-color: #963e48;
+        --navbar-scrollbar-active-color: #5f3034;
+        --navbar-scrollbar-background: #1c1e21;
 
         --link-color: #8cf;
         --link-color-hover: #9df;
@@ -124,6 +133,7 @@
 
         /* Colors taken from the Godot script editor with the Adaptive theme */
         --highlight-background-color: #202531;
+        --highlight-default-color: rgba(255, 255, 255, 0.85);
         --highlight-comment-color: rgba(204, 206, 211, 0.5);
         --highlight-keyword-color: #ff7085;
         --highlight-keyword2-color: #42ffc2;
@@ -246,11 +256,74 @@ hr,
     border-color: var(--hr-color);
 }
 
-/* Doesn't seem to be used on Read the Docs online builds, but is present when building locally */
+/* JavaScript documentation directives */
 .rst-content dl:not(.docutils) dt {
     background-color: var(--admonition-note-background-color);
     border-color: var(--admonition-note-title-background-color);
     color: var(--admonition-note-color);
+}
+.rst-content dl:not(.docutils) dl dt {
+    background-color: var(--admonition-attention-background-color);
+    border-color: var(--admonition-attention-title-background-color);
+    color: var(--admonition-attention-color);
+}
+.rst-content dl:not(.docutils).class dt,
+.rst-content dl:not(.docutils).function dt,
+.rst-content dl:not(.docutils).method dt,
+.rst-content dl:not(.docutils).attribute dt {
+    width: 100%;
+}
+.rst-content dl:not(.docutils).class > dt,
+.rst-content dl:not(.docutils).function > dt,
+.rst-content dl:not(.docutils).method > dt,
+.rst-content dl:not(.docutils).attribute > dt {
+    font-size: 100%;
+    font-weight: normal;
+    margin-bottom: 16px;
+    padding: 6px 8px;
+}
+.rst-content dl:not(.docutils) tt.descclassname,
+.rst-content dl:not(.docutils) code.descclassname {
+    color: var(--highlight-type2-color);
+    font-weight: normal;
+}
+.rst-content dl:not(.docutils) tt.descname,
+.rst-content dl:not(.docutils) code.descname {
+    color: var(--highlight-function-color);
+    font-weight: normal;
+}
+.rst-content dl:not(.docutils) .sig-paren,
+.rst-content dl:not(.docutils) .optional {
+    color: var(--highlight-operator-color);
+    font-weight: normal;
+    padding: 0 2px;
+}
+.rst-content dl:not(.docutils) .optional {
+    font-style: italic;
+}
+.rst-content dl:not(.docutils) .sig-param,
+.rst-content dl:not(.docutils).class dt > em,
+.rst-content dl:not(.docutils).function dt > em,
+.rst-content dl:not(.docutils).method dt > em {
+    color: var(--code-literal-color);
+    font-style: normal;
+    padding: 0 4px;
+}
+.rst-content dl:not(.docutils) .sig-param,
+.rst-content dl:not(.docutils).class dt > .optional ~ em,
+.rst-content dl:not(.docutils).function dt > .optional ~ em,
+.rst-content dl:not(.docutils).method dt > .optional ~ em {
+    color: var(--highlight-number-color);
+    font-style: italic;
+}
+.rst-content dl:not(.docutils).class dt > em.property {
+    color: var(--highlight-keyword-color);
+}
+.rst-content dl:not(.docutils) dt a.headerlink {
+    color: var(--link-color);
+}
+.rst-content dl:not(.docutils) dt a.headerlink:visited {
+    color: var(--link-color-visited);
 }
 
 footer,
@@ -430,58 +503,95 @@ code,
     background-color: var(--highlight-background-color);
 }
 
-.highlight .c1,
-.highlight .cm {
+.highlight .gh /* Generic.Heading */,
+.highlight .gu /* Generic.Subheading */,
+.highlight .go /* Generic.Output */,
+.highlight .gt /* Generic.Traceback */ {
+    color: var(--highlight-default-color);
+}
+
+.highlight .c  /* Comment */,
+.highlight .c1 /* Comment.Single */,
+.highlight .cm /* Comment.Multiline */,
+.highlight .cs /* Comment.Special */ {
     color: var(--highlight-comment-color);
 }
 
-.highlight .bp,
-.highlight .k,
-.highlight .kd,
-.highlight .kn,
-.highlight .kt,
-.highlight .ow {
+.highlight .bp /* Name.Builtin.Pseudo */,
+.highlight .k  /* Keyword */,
+.highlight .kc /* Keyword.Constant */,
+.highlight .kd /* Keyword.Declaration */,
+.highlight .kn /* Keyword.Namespace */,
+.highlight .kp /* Keyword.Pseudo */,
+.highlight .kr /* Keyword.Reserved */,
+.highlight .kt /* Keyword.Type */,
+.highlight .ow /* Operator.Word */ {
     color: var(--highlight-keyword-color);
 }
 
-.highlight .cp {
+.highlight .ch /* Comment.Hashbang */,
+.highlight .cp /* Comment.Preproc */ {
     color: var(--highlight-keyword2-color);
 }
 
-.highlight .m,
-.highlight .mf,
-.highlight .mi {
+.highlight .m  /* Literal.Number */,
+.highlight .mf /* Literal.Number.Float */,
+.highlight .mi /* Literal.Number.Integer */,
+.highlight .il /* Literal.Number.Integer.Long */,
+.highlight .mb /* Literal.Number.Bin */,
+.highlight .mh /* Literal.Number.Hex */,
+.highlight .mo /* Literal.Number.Oct */ {
     color: var(--highlight-number-color);
 }
 
-.highlight .na {
+.highlight .na /* Name.Attribute */,
+.highlight .nd /* Name.Decorator */,
+.highlight .ni /* Name.Entity */,
+.highlight .nl /* Name.Label */ {
     color: var(--highlight-decorator-color);
 }
 
-.highlight .nb {
+.highlight .nb /* Name.Builtin */,
+.highlight .ne /* Name.Exception */ {
     color: var(--highlight-type-color);
 }
 
-.highlight .nc,
-.highlight .nn,
-.highlight .nv {
+.highlight .nc /* Name.Class */,
+.highlight .nn /* Name.Namespace */,
+.highlight .no /* Name.Constant */,
+.highlight .nv /* Name.Variable */,
+.highlight .vc /* Name.Variable.Class */,
+.highlight .vg /* Name.Variable.Global */,
+.highlight .vi /* Name.Variable.Instance */,
+.highlight .vm /* Name.Variable.Magic */ {
     color: var(--highlight-type2-color);
 }
 
-.highlight .nf,
-.highlight .nt {
+.highlight .nf /* Name.Function */,
+.highlight .fm /* Name.Function.Magic */,
+.highlight .nt /* Name.Tag */ {
     color: var(--highlight-function-color);
 }
 
-.highlight .o {
+.highlight .o  /* Operator */,
+.highlight .si /* Literal.String.Interpol */,
+.highlight .sx /* Literal.String.Other */,
+.highlight .sr /* Literal.String.Regex */,
+.highlight .ss /* Literal.String.Symbol */ {
     color: var(--highlight-operator-color);
 }
 
-.highlight .cpf,
-.highlight .s,
-.highlight .s1,
-.highlight .s2,
-.highlight .se {
+.highlight .cpf/* Comment.PreprocFile */,
+.highlight .s  /* Literal.String */,
+.highlight .s1 /* Literal.String.Single */,
+.highlight .s2 /* Literal.String.Double */,
+.highlight .sc /* Literal.String.Char */,
+.highlight .se /* Literal.String.Escape */,
+.highlight .sa /* Literal.String.Affix */,
+.highlight .sb /* Literal.String.Backtick */,
+.highlight .dl /* Literal.String.Delimiter */,
+.highlight .sd /* Literal.String.Doc */,
+.highlight .sh /* Literal.String.Heredoc */ {
     color: var(--highlight-string-color);
 }
 
@@ -570,6 +680,13 @@ kbd, .kbd {
     opacity: var(--logo-opacity);
 }
 
+.wy-side-nav-search > a img.logo {
+    /* Fixed size to prevent reflows and support hiDPI displays */
+    /* A 5 pixel margin is added on each side. The logo itself displays at 200×200 at 100% scaling. */
+    width: 210px;
+    height: 210px;
+}
+
 .wy-side-nav-search {
     background-color: var(--navbar-background-color);
 }
@@ -581,7 +698,7 @@ kbd, .kbd {
 @media only screen and (min-width: 769px) {
     /* Simulate a drop shadow that only affects the bottom edge */
     /* This is used to indicate the search bar is fixed */
-    .wy-side-nav-search.fixed::after {
+    .wy-side-nav-search.fixed-and-scrolled::after {
         content: '';
         position: absolute;
         left: 0;
@@ -660,11 +777,6 @@ kbd, .kbd {
 
 /* First level of navigation items */
 
-.wy-menu-vertical {
-    /* Account for the increased `toctree-expand` button margins */
-    width: 308px;
-}
-
 .wy-menu-vertical a {
     color: var(--navbar-level-1-color);
 }
@@ -732,6 +844,16 @@ kbd, .kbd {
     background-color: var(--navbar-current-background-color-active);
 }
 
+.wy-menu-vertical a {
+    /* This overrides 8px margin added in other multi-selector rules */
+    margin-right: 0;
+}
+
+/* Banner panel in sidebar */
+.wy-nav-side .ethical-rtd.fixed {
+    position: fixed;
+}
+
 /* Version selector (only visible on Read the Docs) */
 
 .rst-versions {
@@ -781,4 +903,51 @@ kbd, .kbd {
     background-color: transparent;
     font-weight: inherit;
     padding: 0;
+}
+
+/* Allows the scrollbar to be shown in the sidebar */
+@media only screen and (min-width: 769px) {
+    .wy-side-scroll {
+        overflow: hidden;
+    }
+
+    .wy-nav-side .wy-side-scroll .ethical-rtd {
+        width: calc(300px - 1.25em);
+        padding: 0 0 0 1em;
+    }
+}
+.wy-menu.wy-menu-vertical {
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: calc(100% - 348px);
+}
+@media screen and (max-width: 768px) {
+    .wy-nav-side {
+        padding-bottom: 44px;
+    }
+    .wy-menu.wy-menu-vertical {
+        overflow-y: initial;
+        max-height: initial;
+    }
+}
+
+/* Scrollbar styling */
+.wy-menu.wy-menu-vertical {
+    scrollbar-color: var(--navbar-scrollbar-color) var(--navbar-scrollbar-background);
+}
+.wy-menu.wy-menu-vertical::-webkit-scrollbar {
+    width: .75rem;
+}
+.wy-menu.wy-menu-vertical::-webkit-scrollbar-track {
+    background-color: var(--navbar-scrollbar-background);
+}
+.wy-menu.wy-menu-vertical::-webkit-scrollbar-thumb {
+    background-color: var(--navbar-scrollbar-color);
+}
+/* Firefox does the dimming on hover automatically. We emulate it for Webkit-based browsers. */
+.wy-menu.wy-menu-vertical::-webkit-scrollbar-thumb:hover {
+    background-color: var(--navbar-scrollbar-hover-color);
+}
+.wy-menu.wy-menu-vertical::-webkit-scrollbar-thumb:active {
+    background-color: var(--navbar-scrollbar-active-color);
 }

@@ -64,14 +64,14 @@ Build configuration:
 -  Type ``scons`` in the *Command* field. If it fails with 'Could not start process "scons"',
    it can mean that ``scons`` is not in your ``PATH`` environment variable, so you may have to
    use the full path to the SCons binary.
--  Fill the *Arguments* field with your compilation options. (e.g.: ``p=x11 target=debug -j 4``)
+-  Fill the *Arguments* field with your compilation options. (e.g.: ``p=linuxbsd target=debug -j 4``)
 
 .. image:: img/qtcreator-set-scons-command.png
 
 Run configuration:
 
 -  Open the *Run* tab.
--  Point the *Executable* to your compiled Godot binary (e.g: ``%{buildDir}/bin/godot.x11.opt.tools.64``)
+-  Point the *Executable* to your compiled Godot binary (e.g: ``%{buildDir}/bin/godot.linuxbsd.opt.tools.64``)
 -  If you want to run a specific game or project, point *Working directory* to the game directory.
 -  If you want to run the editor, add ``-e`` to the *Command line arguments* field.
 
@@ -81,9 +81,9 @@ Updating sources after pulling latest commits
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 As a developer you usually want to frequently pull the latest commits
-from the upstream git repository or a specific fork etc. However this
+from the upstream git repository or a specific fork etc. However, this
 brings a little problem with it: as the development continues, source files
-(and folders) are added or removed. These changes needs to be reflected in
+(and folders) are added or removed. These changes need to be reflected in
 your project files for Qt Creator too, so you continue to have a nice
 experience coding in it. A simple way to check is to right click
 at your root folder in the "Projects View" and click on "Edit files..."
@@ -92,7 +92,7 @@ at your root folder in the "Projects View" and click on "Edit files..."
 
 Now a new dialog should appear that is similar in functionality to the one in the third step
 of the "Importing the project" section. Here you can check whether you want to add/remove
-specific files and/or folders. You can chose by clicking with your mouse or just simply by
+specific files and/or folders. You can choose by clicking with your mouse or just simply by
 clicking the "Apply Filter" button. A simple click on "Ok" and you're ready to continue your work.
 
 .. image:: img/qtcreator-edit-files-dialog.png
@@ -139,14 +139,14 @@ Now that the project has been imported, open the project configuration.
 
 Add the following includes/imports:
 
-::
+.. code-block:: none
 
     .  // a dot to indicate the root of the Godot project
     core/
     core/os/
     core/math/
     drivers/
-    platform/x11/  // make that platform/osx/ if you're using macOS
+    platform/linuxbsd/  // make that platform/osx/ if you're using macOS
 
 .. image:: img/kdevelop_addincludes.png
 
@@ -154,7 +154,7 @@ Apply the changes.
 
 Switch to the "Custom Build System" tab. Add a build configuration
 and keep the build directory blank. Enable build tools and add ``scons``
-as the executable then add ``platform=x11 target=debug`` (``platform=osx``
+as the executable then add ``platform=linuxbsd target=debug`` (``platform=osx``
 if you're on macOS) as the arguments.
 
 .. image:: img/kdevelop_buildconfig.png
@@ -167,7 +167,7 @@ From the "Run" menu, choose "Configure Launches".
 Click "Add" if no launcher exists. Then add the path to your
 executable in the executable section. Your executable should be located
 in the ``bin/`` sub-directory and should be named something like
-``godot.x11.tools.64`` (the name could be different depending on your
+``godot.linuxbsd.tools.64`` (the name could be different depending on your
 platform and depending on your build options).
 
 .. image:: img/kdevelop_configlaunches2.png
@@ -285,7 +285,7 @@ To create them:
 
 .. image:: img/vscode_2_launch.json.png
 
-(Note that *godot.x11.tools.64* in "program" value might be named differently on macOS or Windows)
+(Note that *godot.linuxbsd.tools.64* in "program" value might be named differently on macOS or Windows)
 
 - Create *tasks.json* by starting the Debug process with :kbd:`F5`. VS Code will show a dialog with a *Configure Task* button. Tap it and select *Create tasks.json file from template*, then select *Others*
 
@@ -293,11 +293,12 @@ To create them:
 
 .. image:: img/vscode_3_tasks.json.png
 
-(Note that *platform=x11* will be different for macOX and Windows)
+(Note that *platform=linuxbsd* will be different for macOX and Windows)
 
 - You can now start the Debug process again to test that everything works.
 
-- If the build phase fails, check the console for hints. On Linux it's most likely that some dependencies are missing. Check :ref:`Compiling for X11 (Linux, \*BSD) <doc_compiling_for_x11>`
+- If the build phase fails, check the console for hints. On Linux, it's most
+  likely due to missing dependencies. Check :ref:`doc_compiling_for_linuxbsd`.
 
 
 .. _doc_configuring_an_ide_android_studio:
