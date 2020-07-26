@@ -290,7 +290,7 @@ Add the following code to ``Player.gd``:
             //  -------------------------------------------------------------------
             //  Walking
             _dir = new Vector3();
-            Transform camXform = _camera.GetGlobalTransform();
+            Transform camXform = _camera.GlobalTransform;
 
             Vector2 inputMovementVector = new Vector2();
 
@@ -482,9 +482,9 @@ If you want to move using the world space directional vectors, you'd do somethin
         node.translate(Vector3(1, 0, 0))
     if Input.is_action_pressed("movement_right"):
         node.translate(Vector3(-1, 0, 0))
-        
+
  .. code-tab:: csharp
- 
+
     if (Input.IsActionPressed("movement_forward"))
         node.Translate(new Vector3(0, 0, 1));
     if (Input.IsActionPressed("movement_backward"))
@@ -518,7 +518,7 @@ The space in which an object's position is the origin of the universe. Because t
 of the origin can be at ``N`` many locations, the values derived from local space change
 with the position of the origin.
 
-.. note:: This stack overflow question has a much better explanation of world space and local space.
+.. note:: This question from Game Development Stack Exchange has a much better explanation of world space and local space.
 
           https://gamedev.stackexchange.com/questions/65783/what-are-world-space-and-eye-space-in-game-development
           (Local space and eye space are essentially the same thing in this context)
@@ -542,9 +542,9 @@ To use the :ref:`Spatial <class_Spatial>` node's local directional vectors, we u
         node.translate(node.global_transform.basis.x.normalized())
     if Input.is_action_pressed("movement_right"):
         node.translate(-node.global_transform.basis.x.normalized())
-        
+
  .. code-tab:: csharp
-        
+
     if (Input.IsActionPressed("movement_forward"))
         node.Translate(node.GlobalTransform.basis.z.Normalized());
     if (Input.IsActionPressed("movement_backward"))
@@ -711,7 +711,7 @@ First we need a few more class variables in our player script:
     [Export]
     public float SprintAccel = 18.0f;
     private bool _isSprinting = false;
-    
+
     private SpotLight _flashlight;
 
 All the sprinting variables work exactly the same as the non sprinting variables with
@@ -728,7 +728,7 @@ Now we need to add a few lines of code, starting in ``_ready``. Add the followin
     flashlight = $Rotation_Helper/Flashlight
 
  .. code-tab:: csharp
- 
+
     _flashlight = GetNode<SpotLight>("Rotation_Helper/Flashlight");
 
 This gets the ``Flashlight`` node and assigns it to the ``flashlight`` variable.
@@ -758,7 +758,7 @@ Now we need to change some of the code in ``process_input``. Add the following s
     # ----------------------------------
 
  .. code-tab:: csharp
- 
+
     //  -------------------------------------------------------------------
     //  Sprinting
     if (Input.IsActionPressed("movement_sprint"))
@@ -799,12 +799,12 @@ Now we need to change a couple things in ``process_movement``. First, replace ``
         target *= MAX_SPEED
 
  .. code-tab:: csharp
- 
+
     if (_isSprinting)
-        target *= MaxSprintSpeed;    
+        target *= MaxSprintSpeed;
     else
         target *= MaxSpeed;
-            
+
 Now instead of always multiplying ``target`` by ``MAX_SPEED``, we first check to see if the player is sprinting or not.
 If the player is sprinting, we instead multiply ``target`` by ``MAX_SPRINT_SPEED``.
 
@@ -819,7 +819,7 @@ Now all that's left is to change the acceleration when sprinting. Change ``accel
         accel = ACCEL
 
  .. code-tab:: csharp
- 
+
     if (_isSprinting)
         accel = SprintAccel;
     else

@@ -1,7 +1,10 @@
 .. _doc_c_sharp:
 
+C# basics
+=========
+
 Introduction
-============
+------------
 
 .. warning:: C# support is a new feature available since Godot 3.0.
              As such, you may still run into some issues, or find spots
@@ -35,8 +38,8 @@ page in the Mono documentation.
 Setting up C# for Godot
 -----------------------
 
-Windows
-~~~~~~~
+Windows (Visual Studio)
+~~~~~~~~~~~~~~~~~~~~~~~
 
 Download and install the latest version of
 `Visual Studio <https://visualstudio.microsoft.com/downloads/>`_
@@ -46,6 +49,22 @@ you can download just the
 `Visual Studio Build Tools <https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=BuildTools&rel=15>`_
 instead.
 Make sure you at least have the .NET Framework 4.5 targeting pack installed, you can get it using any of the installers mentioned above inside the "Individual components" tab.
+
+Windows (JetBrains Rider)
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+JetBrains Rider comes with bundled MSBuild, so nothing extra is required.
+Make sure to set the following preferences:
+
+- In Godot:
+
+   - Mono External Editor to JetBrains Rider
+   - Mono Build Tool to JetBrains Mono.
+
+- In Rider:
+
+   - Set ``MSBuild version`` to either bundled with Rider or .NET Core.
+   - Install **Godot support** plugin.
 
 macOS and Linux
 ~~~~~~~~~~~~~~~
@@ -125,29 +144,6 @@ version control system. ``.mono`` can be safely added to the ignore list of your
 When troubleshooting, it can sometimes help to delete the ``.mono`` folder
 and let it regenerate.
 
-Note that currently, there are some issues where Godot and the C# project
-don't stay in sync; if you delete, rename or move a C# script, the change
-may not be reflected in the C# project file.
-In cases like this, you will have to edit the C# project file manually.
-
-For example, if you created a script (e.g. ``Test.cs``) and delete it in Godot,
-compilation will fail because the missing file is still expected to be there
-by the C# project file. For now, you can simply open up the ``.csproj`` file
-and look for the ``ItemGroup``, there should be a line included
-like the following:
-
-.. code-block:: xml
-    :emphasize-lines: 2
-
-    <ItemGroup>
-        <Compile Include="Test.cs" />
-        <Compile Include="AnotherTest.cs" />
-    </ItemGroup>
-
-Simply remove that line and your project should build correctly again.
-Same for renaming and moving things, simply rename and move them
-in the project file if needed.
-
 Example
 -------
 
@@ -208,15 +204,9 @@ you should be aware of when diving into C# in Godot, but if in doubt, also
 take a look over the official
 `issue tracker for Mono issues <https://github.com/godotengine/godot/labels/topic%3Amono>`_.
 
-- As explained above, the C# project isn't always kept in sync automatically
-  when things are deleted, renamed or moved in Godot
-  (`#12917 <https://github.com/godotengine/godot/issues/12917>`_).
 - Writing editor plugins is possible, but it is currently quite convoluted.
 - State is currently not saved and restored when hot-reloading,
   with the exception of exported variables.
-- Exporting Mono projects is supported for desktop platforms
-  (Linux, Windows and macOS), Android, HTML5, and iOS. UWP is not currently supported.
-  (`#20271 <https://github.com/godotengine/godot/issues/20271>`_).
 - Attached C# scripts should refer to a class that has a class name
   that matches the file name.
 - There are some methods such as ``Get()``/``Set()``, ``Call()``/``CallDeferred()``
@@ -225,6 +215,11 @@ take a look over the official
   So when using e.g. ``CallDeferred("AddChild")``, ``AddChild`` will not work because
   the API is expecting the original ``snake_case`` version ``add_child``. However, you
   can use any custom properties or methods without this limitation.
+
+
+As of Godot 3.2.2, exporting Mono projects is supported for desktop platforms
+(Linux, Windows and macOS), Android, HTML5, and iOS. The only platform not
+supported yet is UWP.
 
 Performance of C# in Godot
 --------------------------
@@ -294,3 +289,19 @@ Configuring VS 2019 for debugging
 
 5. Run the game in Godot. It should hang at the Godot splash screen while it waits for your debugger to attach.
 6. In VS 2019, open your project and choose Extensions --> Mono --> Attach to Mono Debugger.
+
+Configuring Visual Studio Code for debugging
+--------------------------------------------
+
+To configure Visual Studio Code for debugging open up a project in Godot. Click on Project
+and open the project settings. Scroll down and click on Debugger Agent under the Mono
+category. Then turn on the setting "wait for debugger." Next, copy the port number
+and open up Visual Studio Code.
+
+You need to download the Mono Debug extension from Microsoft. Then open the Godot
+project folder. Go to the run tab and click on create a launch.json file. Select C#
+Mono from the dropdown menu. When the launch.json file is automatically opened,
+change the port number to the number you copied previously and save the file. On the
+run tab, switch the run setting from launch to attach. Whenever you want to debug,
+make sure Wait for Debugger is turned on in Godot, run the project, and run the
+debugger in Visual Studio Code.

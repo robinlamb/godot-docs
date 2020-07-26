@@ -16,8 +16,11 @@ For compiling under Windows, the following is required:
   will have to run/download the installer again.**
 - `MinGW-w64 <http://mingw-w64.org/>`_ with GCC can be used as an alternative to
   Visual Studio. Be sure to install/configure it to use the ``posix`` thread model.
+  **Important:** When using MinGW to compile the ``master`` branch, you need GCC 9 or later. Because
+  MinGW does not officially release GCC 9 yet, you can get an alternate installer from
+  `here <https://jmeubank.github.io/tdm-gcc/articles/2020-03/9.2.0-release>`_.
 - `Python 3.5+ <https://www.python.org/downloads/windows/>`_.
-- `SCons 3.0 <https://www.scons.org>`_ build system. If using Visual Studio 2019,
+- `SCons 3.0 <https://www.scons.org/>`_ build system. If using Visual Studio 2019,
   you need at least SCons 3.1.1.
 - *Optional* - `yasm <https://yasm.tortall.net/>`_ (for WebM SIMD optimizations)
 
@@ -33,19 +36,26 @@ For compiling under Windows, the following is required:
                   mingw-w64-x86_64-gcc mingw-w64-x86_64-yasm \
                   mingw-w64-i686-python3-pip mingw-w64-i686-gcc \
                   mingw-w64-i686-yasm make
-              
+
           For each MSYS2 MinGW subsystem, you should then run
           `pip install scons` in its shell.
 
 .. seealso:: For a general overview of SCons usage for Godot, see
              :ref:`doc_introduction_to_the_buildsystem`.
 
+Setting up Python
+-----------------
+
+First you need to install Python 3.5 or newer. Make sure to enable the option
+to add Python to the ``PATH`` in the Python installer. The SCons installer
+should then detect and use the existing Python installation.
+
 Setting up SCons
 ----------------
 
-First, make sure to enable the option to add Python to the ``PATH`` in
-the Python installer. The SCons installer should then detect and use
-the existing Python installation.
+To install SCons open the command prompt and run the following command.
+
+``python -m pip install scons``
 
 To check whether you have installed Python and SCons correctly, you can
 type ``python --version`` and ``scons --version`` into a command prompt
@@ -209,8 +219,8 @@ To make sure you are doing things correctly, executing the following in
 the shell should result in a working compiler (the version output may
 differ based on your system)::
 
-    user@host:~$ ${MINGW32_PREFIX}gcc --version
-    i686-w64-mingw32-gcc (GCC) 6.1.0 20160427 (Mageia MinGW 6.1.0-1.mga6)
+    ${MINGW32_PREFIX}gcc --version
+    # i686-w64-mingw32-gcc (GCC) 6.1.0 20160427 (Mageia MinGW 6.1.0-1.mga6)
 
 Troubleshooting
 ~~~~~~~~~~~~~~~

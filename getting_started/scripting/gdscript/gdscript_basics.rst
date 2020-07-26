@@ -271,6 +271,8 @@ The following is the list of supported operators and their precedence.
 +---------------------------------------------------------------+-----------------------------------------+
 | ``if x else``                                                 | Ternary if/else                         |
 +---------------------------------------------------------------+-----------------------------------------+
+| ``as``                                                        | Type casting                            |
++---------------------------------------------------------------+-----------------------------------------+
 | ``=`` ``+=`` ``-=`` ``*=`` ``/=`` ``%=`` ``&=`` ``|=``        | Assignment (lowest priority)            |
 +---------------------------------------------------------------+-----------------------------------------+
 
@@ -352,8 +354,35 @@ PackedFloat32Array store 32-bit single-precision "float" values.
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 A sequence of characters in `Unicode format <https://en.wikipedia.org/wiki/Unicode>`_.
-Strings can contain
-`standard C escape sequences <https://en.wikipedia.org/wiki/Escape_sequences_in_C>`_.
+Strings can contain the following escape sequences:
+
++---------------------+---------------------------------+
+| **Escape sequence** | **Expands to**                  |
++---------------------+---------------------------------+
+| ``\n``              | Newline (line feed)             |
++---------------------+---------------------------------+
+| ``\t``              | Horizontal tab character        |
++---------------------+---------------------------------+
+| ``\r``              | Carriage return                 |
++---------------------+---------------------------------+
+| ``\a``              | Alert (beep/bell)               |
++---------------------+---------------------------------+
+| ``\b``              | Backspace                       |
++---------------------+---------------------------------+
+| ``\f``              | Formfeed page break             |
++---------------------+---------------------------------+
+| ``\v``              | Vertical tab character          |
++---------------------+---------------------------------+
+| ``\"``              | Double quote                    |
++---------------------+---------------------------------+
+| ``\'``              | Single quote                    |
++---------------------+---------------------------------+
+| ``\\``              | Backslash                       |
++---------------------+---------------------------------+
+| ``\uXXXX``          | Unicode codepoint ``XXXX``      |
+|                     | (hexadecimal, case-insensitive) |
++---------------------+---------------------------------+
+
 GDScript also supports :ref:`doc_gdscript_printf`.
 
 Vector built-in types
@@ -514,6 +543,20 @@ assign to it::
     d[4] = "hello" # Add integer 4 as a key and assign the String "hello" as its value.
     d["Godot"] = 3.01 # Add String "Godot" as a key and assign the value 3.01 to it.
 
+    var test = 4
+    # Prints "hello" by indexing the dictionary with a dynamic key.
+    # This is not the same as `d.test`. The bracket syntax equivalent to
+    # `d.test` is `d["test"]`.
+    print(d[test])
+
+.. note::
+
+    The bracket syntax can be used to access properties of any
+    :ref:`class_Object`, not just Dictionaries. Keep in mind it will cause a
+    script error when attempting to index a non-existing property. To avoid
+    this, use the :ref:`Object.get() <class_Object_method_get>` and
+    :ref:`Object.set() <class_Object_method_set>` methods instead.
+
 Data
 ----
 
@@ -615,7 +658,7 @@ expressions and must be assigned on initialization.
     const E = [1, 2, 3, 4][0] # Constant expression: 1.
     const F = sin(20) # 'sin()' can be used in constant expressions.
     const G = x + 20 # Invalid; this is not a constant expression!
-    const H = A + 20 # Constant expression: 25.
+    const H = A + 20 # Constant expression: 25 (`A` is a constant).
 
 Although the type of constants is inferred from the assigned value, it's also
 possible to add explicit type specification::
@@ -624,6 +667,12 @@ possible to add explicit type specification::
     const B: Vector2 = Vector2()
 
 Assigning a value of an incompatible type will raise an error.
+
+.. note::
+
+    Since arrays and dictionaries are passed by reference, constants are "flat".
+    This means that if you declare a constant array or dictionary, it can still
+    be modified afterwards. They can't be reassigned with another value though.
 
 Enums
 ^^^^^
@@ -788,7 +837,7 @@ for
 
 To iterate through a range, such as an array or table, a *for* loop is
 used. When iterating over an array, the current array element is stored in
-the loop variable. When iterating over a dictionary, the *index* is stored
+the loop variable. When iterating over a dictionary, the *key* is stored
 in the loop variable.
 
 ::
@@ -846,8 +895,8 @@ Basic syntax::
 **Control flow**:
 
 The patterns are matched from top to bottom.
-If a pattern matches, the corresponding block will be executed. After that, the execution continues below the ``match`` statement.
-If you want to have a fallthrough, you can use ``continue`` to stop execution in the current block and check the ones below it.
+If a pattern matches, the first corresponding block will be executed. After that, the execution continues below the ``match`` statement.
+You can use ``continue`` to stop execution in the current block and check for an additional match in the patterns below it.
 
 There are 6 pattern types:
 
@@ -987,7 +1036,6 @@ will then appear with its new icon in the editor::
    # Item.gd
 
    extends Node
-
    class_name Item, "res://interface/icons/item.png"
 
 .. image:: img/class_name_editor_register_example.png
@@ -1000,10 +1048,13 @@ Here's a class file example:
 
     class_name Character
 
+
     var health = 5
+
 
     func print_health():
         print(health)
+
 
     func print_this_script_three_times():
         print(get_script())
@@ -1093,8 +1144,10 @@ This is better explained through examples. Consider this scenario::
     var entity = null
     var message = null
 
+
     func _init(e=null):
         entity = e
+
 
     func enter(m):
         message = m
@@ -1102,6 +1155,7 @@ This is better explained through examples. Consider this scenario::
 
     # Idle.gd (inheriting class)
     extends "State.gd"
+
 
     func _init(e=null, m=null).(e):
         # Do something with 'e'.
@@ -1138,8 +1192,11 @@ function.
     # An inner class in this class file.
     class SomeInnerClass:
         var a = 5
+
+
         func print_value_of_a():
             print(a)
+
 
     # This is the constructor of the class file's main class.
     func _init():
@@ -1161,6 +1218,7 @@ class resource is done by calling the ``new`` function on the class object::
 
     # Preload the class only once at compile time.
     const MyClass = preload("myclass.gd")
+
 
     func _init():
         var a = MyClass.new()
@@ -1194,8 +1252,10 @@ with the new value. Vice versa, when ``variable`` is accessed, the *getter* func
 
     var my_var setget my_var_set, my_var_get
 
+
     func my_var_set(new_value):
         my_var = new_value
+
 
     func my_var_get():
         return my_var # Getter must return a value.
@@ -1238,6 +1298,7 @@ placed at the top of the file::
     tool
     extends Button
 
+
     func _ready():
         print("Hello")
 
@@ -1276,6 +1337,7 @@ to. To create custom signals for a class, use the ``signal`` keyword.
 
    extends Node
 
+
    # A signal named health_depleted.
    signal health_depleted
 
@@ -1301,6 +1363,7 @@ signal, the game node's ``_on_Character_health_depleted`` is called::
         var character_node = get_node('Character')
         character_node.connect("health_depleted", self, "_on_Character_health_depleted")
 
+
     func _on_Character_health_depleted():
         get_tree().reload_current_scene()
 
@@ -1319,6 +1382,7 @@ the :ref:`Object.connect() <class_Object_method_connect>` method::
 
     ...
     signal health_changed
+
 
     func take_damage(amount):
         var old_health = health
@@ -1433,6 +1497,7 @@ an example::
         yield()
         print("world")
 
+
     func _ready():
         var y = my_func()
         # Function state saved in 'y'.
@@ -1454,6 +1519,7 @@ for example::
         print(yield())
         return "cheers!"
 
+
     func _ready():
         var y = my_func()
         # Function state saved in 'y'.
@@ -1473,9 +1539,10 @@ Remember to save the new function state, when using multiple ``yield``\s::
             print("Turn %d" % i)
             yield();
 
+
     func _ready():
         var co = co_func();
-        while co is GDScriptFunction && co.is_valid():
+        while co is GDScriptFunctionState && co.is_valid():
             co = co.resume();
 
 
@@ -1502,11 +1569,46 @@ into an invalid state, for example::
         yield(button_func(), "completed")
         print("All buttons were pressed, hurray!")
 
+
     func button_func():
         yield($Button0, "pressed")
         yield($Button1, "pressed")
 
 ``my_func`` will only continue execution once both buttons have been pressed.
+
+You can also get the signal's argument once it's emitted by an object:
+
+::
+
+    # Wait for when any node is added to the scene tree.
+    var node = yield(get_tree(), "node_added")
+
+If you're unsure whether a function may yield or not, or whether it may yield
+multiple times, you can yield to the ``completed`` signal conditionally:
+
+::
+
+    func generate():
+        var result = rand_range(-1.0, 1.0)
+
+        if result < 0.0:
+            yield(get_tree(), "idle_frame")
+
+        return result
+
+
+    func make():
+        var result = generate()
+
+        if result is GDScriptFunctionState: # Still working.
+            result = yield(result, "completed")
+
+        return result
+
+This ensures that the function returns whatever it was supposed to return
+regardless of whether coroutines were used internally. Note that using
+``while`` would be redundant here as the ``completed`` signal is only emitted
+when the function didn't yield anymore.
 
 Onready keyword
 ~~~~~~~~~~~~~~~
@@ -1519,6 +1621,7 @@ be obtained when a call to ``Node._ready()`` is made.
 ::
 
     var my_label
+
 
     func _ready():
         my_label = get_node("MyLabel")

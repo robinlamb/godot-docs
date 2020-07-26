@@ -28,7 +28,7 @@ folder.
 .. note::
 
     Read the :doc:`ui_introduction_to_the_ui_system` first to learn how
-    Godot’s UI system works.
+    Godot's UI system works.
 
 How to design your game UI
 --------------------------
@@ -70,7 +70,7 @@ There are two ways to design your UI in Godot. You can:
    components that inherit from your base scenes.
 
 We will use the first approach, because the first version of your UI may
-not work as well as you’d like. You’re likely to throw parts away and
+not work as well as you'd like. You're likely to throw parts away and
 redesign components as you go. When you're sure everything works, it's
 easy to make some parts reusable, as you'll see below.
 
@@ -127,7 +127,7 @@ We have to add a root node before we can save the scene. Your UI's root
 should be the outermost container or element. In this case it's a
 ``MarginContainer``. ``MarginContainer`` is a good starting point for
 most interfaces, as you often need padding around the UI. Press
-:kbd:`Meta + S` to save the scene to the disk. Name it *MainMenu*.
+:kbd:`Ctrl + S` (:kbd:`Cmd + S` on macOS) to save the scene to the disk. Name it *MainMenu*.
 
 Select the ``MarginContainer`` again, and head to the inspector to
 define the margins' size. Scroll down the ``Control`` class, to the
@@ -150,11 +150,11 @@ Select the ``MarginContainer``, and create the UI elements as
 1. the title or logo,
 2. the three text options as individual nodes,
 3. the version note,
-4. and the main menu’s illustration.
+4. and the main menu's illustration.
 
-Click the **Add Node** button or press :kbd:`Meta + A` on your keyboard.
+Click the **Add Node** button or press :kbd:`Ctrl + A` (:kbd:`Cmd + A` on macOS) on your keyboard.
 Start to type ``TextureRect`` to find the corresponding node and press
-enter. With the new node selected, press :kbd:`Meta + D` five times to
+enter. With the new node selected, press :kbd:`Ctrl + D` (:kbd:`Cmd + D` on macOS) five times to
 create five extra ``TextureRect`` instances.
 
 Click each of the nodes to select it. In the inspector, find the **Texture**
@@ -191,8 +191,8 @@ containers split the area into two: a left and a right side or a top and
 a bottom side. They also allow the user to resize the left and right
 areas using an interactive bar. On the other hand, ``HBoxContainer``
 just splits itself into as many columns as it has children. Although you
-can deactivate the split container's resize behaviour, I recommend to
-favour box containers.
+can deactivate the split container's resize behavior, I recommend to
+favor box containers.
 
 Select the ``MarginContainer`` and add an ``HBoxContainer``. Then, we
 need two containers as children of our ``HBoxContainer``: a
@@ -234,7 +234,7 @@ automatically.
 
 To space out the menu options and the logo on the left, we'll use one
 final container and its size flags. Select the ``VBoxContainer`` and
-press :kbd:`Meta + A` to add a new node inside it. Add a second
+press :kbd:`Ctrl + A` (:kbd:`Cmd + A` on macOS) to add a new node inside it. Add a second
 ``VBoxContainer`` and name it *MenuOptions*. Select all three menu
 options, ``Continue``, ``NewGame`` and ``Options``, and drag and drop
 them inside the new ``VBoxContainer``. The UI's layout should barely

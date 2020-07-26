@@ -84,7 +84,16 @@ may not be accurate for the current frame.
 In order to avoid this inaccuracy, any code that needs to access a body's properties should
 be run in the :ref:`Node._physics_process() <class_Node_method__physics_process>`
 callback, which is called before each physics step at a constant frame rate
-(60 times per second by default).
+(60 times per second by default). This method will be passed a ``delta``
+parameter, which is a floating-point number equal to the time passed in
+*seconds* since the last step. When using the default 60 Hz physics update rate,
+it will typically be equal to ``0.01666...`` (but not always, see below).
+
+.. note::
+
+    It's recommended to always use the ``delta`` parameter when relevant in your
+    physics calculations, so that the game behaves correctly if you change the
+    physics update rate or if the player's device can't keep up.
 
 Collision layers and masks
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -239,13 +248,13 @@ For example, here is the code for an "Asteroids" style spaceship:
 
     class Spaceship : RigidBody2D
     {
-        private Vector2 thrust = new Vector2(0, 250);
-        private float torque = 20000;
+        private Vector2 _thrust = new Vector2(0, 250);
+        private float _torque = 20000;
 
         public override void _IntegrateForces(Physics2DDirectBodyState state)
         {
             if (Input.IsActionPressed("ui_up"))
-                SetAppliedForce(thrust.Rotated(Rotation));
+                SetAppliedForce(_thrust.Rotated(Rotation));
             else
                 SetAppliedForce(new Vector2());
 
@@ -254,7 +263,7 @@ For example, here is the code for an "Asteroids" style spaceship:
                 rotationDir += 1;
             if (Input.IsActionPressed("ui_left"))
                 rotationDir -= 1;
-            SetAppliedTorque(rotationDir * torque);
+            SetAppliedTorque(rotationDir * _torque);
         }
     }
 
@@ -330,11 +339,11 @@ occurred:
 
     class Body : KinematicBody2D
     {
-        private Vector2 velocity = new Vector2(250, 250);
+        private Vector2 _velocity = new Vector2(250, 250);
 
         public override void _PhysicsProcess(float delta)
         {
-            var collisionInfo = MoveAndCollide(velocity * delta);
+            var collisionInfo = MoveAndCollide(_velocity * delta);
             if (collisionInfo != null)
             {
                 var collisionPoint = collisionInfo.GetPosition();
@@ -360,13 +369,13 @@ Or to bounce off of the colliding object:
 
     class Body : KinematicBody2D
     {
-        private Vector2 velocity = new Vector2(250, 250);
+        private Vector2 _velocity = new Vector2(250, 250);
 
         public override void _PhysicsProcess(float delta)
         {
-            var collisionInfo = MoveAndCollide(velocity * delta);
+            var collisionInfo = MoveAndCollide(_velocity * delta);
             if (collisionInfo != null)
-                velocity = velocity.Bounce(collisionInfo.Normal);
+                _velocity = _velocity.Bounce(collisionInfo.Normal);
         }
     }
 
@@ -419,31 +428,33 @@ the ground (including slopes) and jump when standing on the ground:
 
     class Body : KinematicBody2D
     {
-        private float runSpeed = 350;
-        private float jumpSpeed = -1000;
-        private float gravity = 2500;
+        private float _runSpeed = 350;
+        private float _jumpSpeed = -1000;
+        private float _gravity = 2500;
 
-        private Vector2 velocity = new Vector2();
+        private Vector2 _velocity = new Vector2();
 
-        private void getInput()
+        private void GetInput()
         {
-            velocity.x = 0;
+            _velocity.x = 0;
 
             var right = Input.IsActionPressed("ui_right");
             var left = Input.IsActionPressed("ui_left");
             var jump = Input.IsActionPressed("ui_select");
 
             if (IsOnFloor() && jump)
-                velocity.y = jumpSpeed;
+                _velocity.y = _jumpSpeed;
             if (right)
-                velocity.x += runSpeed;
+                _velocity.x += _runSpeed;
             if (left)
-                velocity.x -= runSpeed;
+                _velocity.x -= _runSpeed;
         }
 
         public override void _PhysicsProcess(float delta)
         {
-            velocity.y += gravity * delta;
+            _velocity.y += _gravity * delta;
+            GetInput();
+            _velocity = MoveAndSlide(velocity, new Vector2(0,-1));
         }
     }
 

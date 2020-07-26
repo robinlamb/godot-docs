@@ -14,12 +14,11 @@ Download and install the Android SDK from
 
 If you install Android Studio, you need to run it once to complete the SDK setup.
 
-Install OpenJDK or Oracle JDK
------------------------------
+Install OpenJDK 8
+-----------------
 
-Download and install  `OpenJDK <https://github.com/ojdkbuild/ojdkbuild>`__ or `Oracle JDK <http://www.oracle.com/technetwork/java/javase/downloads/index.html>`__. Versions below JDK 8 may not work; some users have reported issues with the jarsigner (used to sign the APKs) in JDK 7.
-
-If you install OpenJDK, choose ``1.8``. Don't choose the ``openjdk-jre`` files as that only contains the JRE, not the JDK which is required here.
+Download and install  `OpenJDK 8 <https://adoptopenjdk.net/index.html?variant=openjdk8&jvmVariant=hotspot>`__,
+newer versions do not work.
 
 Create a debug.keystore
 -----------------------
@@ -32,7 +31,7 @@ macOS, you can find it in the ``~/.android`` directory).
 If you can't find it or need to generate one, the keytool command from
 the JDK can be used for this purpose::
 
-    keytool -keyalg RSA -genkeypair -alias androiddebugkey -keypass android -keystore debug.keystore -storepass android -dname "CN=Android Debug,O=Android,C=US" -validity 9999
+    keytool -keyalg RSA -genkeypair -alias androiddebugkey -keypass android -keystore debug.keystore -storepass android -dname "CN=Android Debug,O=Android,C=US" -validity 9999 -deststoretype pkcs12
 
 This will create a ``debug.keystore`` file in your current directory. You should move it to a memorable location such as ``%USERPROFILE%\.android\``, because you will need its location in a later step. For more information on ``keytool`` usage, see `this Q&A article <https://godotengine.org/qa/21349/jdk-android-file-missing>`__.
 
@@ -62,7 +61,7 @@ In that screen, the path to 3 files needs to be set:
   - It can usually be found at ``%LOCALAPPDATA%\Android\Sdk\platform-tools\adb.exe``.
 
 - The ``jarsigner`` executable (from JDK 6 or 8)
-  - On Windows, OpenJDK installs to a dir like ``%PROGRAMFILES%\ojdkbuild\java-1.8.0-openjdk-1.8.0.232-2\bin``. On Linux, it typically installs to a dir like ``/usr/bin/jarsigner``. The exact path may vary depending on the OpenJDK update you've installed and your machine's operating system.
+  - On Windows, OpenJDK installs to a directory like ``%PROGRAMFILES%\AdoptOpenJDK\jdk-8.0.252.09-hotspot\bin``. On Linux, it typically installs to a directory like ``/usr/bin/jarsigner``. The exact path may vary depending on the OpenJDK update you've installed and your machine's operating system.
 
 - The debug ``.keystore`` file
   - It can be found in the folder where you put the ``debug.keystore`` file you created above.
@@ -76,12 +75,12 @@ Launcher icons are used by Android launcher apps to represent your application t
 
 There are two types of icons required by Godot:
 
-- **Main Icon:**: The "classic" icon. This will be used on all Android versions up to Android 8 (Oreo), exclusive. Must be at least 192×192 px.
+- **Main Icon:** The "classic" icon. This will be used on all Android versions up to Android 8 (Oreo), exclusive. Must be at least 192×192 px.
 - **Adaptive Icons:** Starting from Android 8 (inclusive), `Adaptive Icons <https://developer.android.com/guide/practices/ui_guidelines/icon_design_adaptive>`_ were introduced. Applications will need to include separate background and foreground icons to have a native look. The user's launcher application will control the icon's animation and masking. Must be at least 432×432 px.
 
 .. seealso:: It's important to adhere to some rules when designing adaptive icons. `Google Design has provided a nice article <https://medium.com/google-design/designing-adaptive-icons-515af294c783>`_ that helps to understand those rules and some of the capabilities of adaptive icons.
 
-.. caution:: The most important adaptive icon design rule is to have your icon critical elements inside the safe zone: a centered circle with a radius of 66dp (264 pixels on ``xxxhdpi``) to avoid being clipped by the launcher.
+.. caution:: The most important adaptive icon design rule is to have your icon critical elements inside the safe zone: a centered circle with a diameter of 66dp (264 pixels on ``xxxhdpi``) to avoid being clipped by the launcher.
 
 If you don't provide some of the requested icons, Godot will replace them using a fallback chain, trying the next in line when the current one fails:
 

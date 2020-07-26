@@ -1,9 +1,9 @@
 .. _doc_high_level_multiplayer:
 
-High level multiplayer
+High-level multiplayer
 ======================
 
-High level vs low level API
+High-level vs low-level API
 ---------------------------
 
 The following explains the differences of high- and low-level networking in Godot as well as some fundamentals. If you want to jump in head-first and add networking to your first nodes, skip to `Initializing the network`_ below. But make sure to read the rest later on!
@@ -57,7 +57,7 @@ Mid level abstraction
 Before going into how we would like to synchronize a game across the network, it can be helpful to understand how the base network API for synchronization works.
 
 Godot uses a mid-level object :ref:`NetworkedMultiplayerPeer <class_NetworkedMultiplayerPeer>`.
-This object is not meant to be created directly, but is designed so that several implementations can provide it.
+This object is not meant to be created directly, but is designed so that several C++ implementations can provide it.
 
 This object extends from :ref:`PacketPeer <class_PacketPeer>`, so it inherits all the useful methods for serializing, sending and receiving data. On top of that, it adds methods to set a peer, transfer mode, etc. It also includes signals that will let you know when peers connect or disconnect.
 
@@ -65,7 +65,7 @@ This class interface can abstract most types of network layers, topologies and l
 provides an implementation based on ENet (:ref:`NetworkedMultiplayerEnet <class_NetworkedMultiplayerENet>`),
 one based on WebRTC (:ref:`WebRTCMultiplayer <class_WebRTCMultiplayer>`), and one based on WebSocket
 (:ref:`WebSocketMultiplayerPeer <class_WebSocketMultiplayerPeer>`), but this could be used to implement
-mobile APIs (for adhoc WiFi, Bluetooth) or custom device/console-specific networking APIs.
+mobile APIs (for ad hoc WiFi, Bluetooth) or custom device/console-specific networking APIs.
 
 For most common cases, using this object directly is discouraged, as Godot provides even higher level networking facilities.
 Yet it is made available in case a game has specific needs for a lower level API.
@@ -75,7 +75,7 @@ Initializing the network
 
 The object that controls networking in Godot is the same one that controls everything tree-related: :ref:`SceneTree <class_SceneTree>`.
 
-To initialize high level networking, the SceneTree must be provided a NetworkedMultiplayerPeer object.
+To initialize high-level networking, the SceneTree must be provided a NetworkedMultiplayerPeer object.
 
 To create that object, it first has to be initialized as a server or client.
 
@@ -85,7 +85,7 @@ Initializing as a server, listening on the given port, with a given maximum numb
 
     var peer = NetworkedMultiplayerENet.new()
     peer.create_server(SERVER_PORT, MAX_PLAYERS)
-    get_tree().set_network_peer(peer)
+    get_tree().network_peer = peer
 
 Initializing as a client, connecting to a given IP and port:
 
@@ -93,7 +93,7 @@ Initializing as a client, connecting to a given IP and port:
 
     var peer = NetworkedMultiplayerENet.new()
     peer.create_client(SERVER_IP, SERVER_PORT)
-    get_tree().set_network_peer(peer)
+    get_tree().network_peer = peer
 
 Get the previously set network peer:
 
@@ -111,7 +111,7 @@ Terminating the networking feature:
 
 ::
 
-    get_tree().set_network_peer(null)
+    get_tree().network_peer = null
 
 (Although it may make sense to send a message first to let the other peers know you're going away instead of letting the connection close or timeout, depending on your game.)
 
@@ -336,7 +336,7 @@ In most games, the goal of multiplayer networking is that the game runs synchron
 Besides supplying an RPC and remote member variable set implementation, Godot adds the concept of network masters.
 
 Network master
-^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^
 
 The network master of a node is the peer that has the ultimate authority over it.
 
@@ -420,3 +420,17 @@ This may not make much sense for an area-of-effect case like the bomb, but in ot
 ::
 
     rpc_id(TARGET_PEER_ID, "stun") # Only stun the target peer
+
+Exporting for dedicated servers
+-------------------------------
+
+Once you've made a multiplayer game, you may want to export it to run it on
+a dedicated server with no GPU available. See
+:ref:`doc_exporting_for_dedicated_servers` for more information.
+
+.. note::
+
+    The code samples on this page aren't designed to run on a dedicated
+    server. You'll have to modify them so the server isn't considered to be a
+    player. You'll also have to modify the game starting mechanism so that the
+    first player who joins can start the game.

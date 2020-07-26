@@ -60,15 +60,13 @@ Now let's take a look at what an asset's page looks like and what it contains.
 1. Asset's thumbnail/icon.
 2. Asset's name.
 3. Current version number of the asset.
-4. Asset's average rating, displayed in stars. (This is currently unimplemented.)
-5. Asset's category, Godot version, and support status.
-6. Asset's original author/submitter.
-7. The license the asset is distributed under.
-8. The date of the asset's latest edit/update.
-9. A textual description of the asset.
-10. Links related to the asset (download link, file list, issue tracker).
-11. A SHA-256 hash of the asset, for download validation purposes.
-12. Images and videos showcasing the asset.
+4. Asset's category, Godot version, and support status.
+5. Asset's original author/submitter.
+6. The license the asset is distributed under.
+7. The date of the asset's latest edit/update.
+8. A textual description of the asset.
+9. Links related to the asset (download link, file list, issue tracker).
+10. Images and videos showcasing the asset.
 
 Registering and logging in
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -173,18 +171,18 @@ which will take you through the same package installation procedure as with the
 assets downloaded directly via Godot that we just covered.
 
 
-.. |image0| image:: ./img/assetlib_website.png
-.. |image1| image:: ./img/assetlib_search.png
-.. |image2| image:: ./img/assetlib_asset.png
-.. |image3| image:: ./img/assetlib_register-login.png
-.. |image4| image:: ./img/assetlib_register.png
-.. |image5| image:: ./img/assetlib_login.png
-.. |image6| image:: ./img/assetlib_login_header.png
-.. |image7| image:: ./img/assetlib_editor_workspace.png
-.. |image8| image:: ./img/assetlib_editor.png
-.. |image9| image:: ./img/assetlib_editor_asset.png
-.. |image10| image:: ./img/assetlib_editor_download.png
-.. |image11| image:: ./img/assetlib_editor_installer.png
-.. |image12| image:: ./img/assetlib_editor_installer_error.png
-.. |image13| image:: ./img/assetlib_editor_installer_success.png
-.. |image14| image:: ./img/assetlib_editor_projects.png
+.. |image0| image:: img/assetlib_website.png
+.. |image1| image:: img/assetlib_search.png
+.. |image2| image:: img/assetlib_asset.png
+.. |image3| image:: img/assetlib_register-login.png
+.. |image4| image:: img/assetlib_register.png
+.. |image5| image:: img/assetlib_login.png
+.. |image6| image:: img/assetlib_login_header.png
+.. |image7| image:: img/assetlib_editor_workspace.png
+.. |image8| image:: img/assetlib_editor.png
+.. |image9| image:: img/assetlib_editor_asset.png
+.. |image10| image:: img/assetlib_editor_download.png
+.. |image11| image:: img/assetlib_editor_installer.png
+.. |image12| image:: img/assetlib_editor_installer_error.png
+.. |image13| image:: img/assetlib_editor_installer_success.png
+.. |image14| image:: img/assetlib_editor_projects.png

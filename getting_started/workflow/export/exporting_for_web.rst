@@ -20,13 +20,18 @@ in the user's browser.
                         Use ``python -m http.server`` with Python 3 to serve the
                         current working directory at ``http://localhost:8000``.
 
+.. attention:: `There are significant bugs when running HTML5 projects on iOS <https://github.com/godotengine/godot/issues/26554>`__
+               (regardless of the browser). We recommend using
+               :ref:`iOS' native export functionality <doc_exporting_for_ios>`
+               instead, as it will also result in better performance.
+
 WebGL 2
 -------
 
 Until the *OpenGL ES 3* renderer is removed from Godot in favor of *Vulkan*,
 HTML5 export uses *WebGL 2* when the *GLES3* option is selected.
 
-.. warning:: Usage of WebGL 2 is not recommended due to its expected removal
+.. warning:: Using WebGL 2 is not recommended due to its expected removal
              from Godot without replacement.
 
 WebGL 2 is not supported in all browsers. **Firefox** and
@@ -103,6 +108,12 @@ The default HTML page does not display the boot splash while loading. However,
 the image is exported as a PNG file, so :ref:`custom HTML pages <doc_customizing_html5_shell>`
 can display it.
 
+Shader language limitations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When exporting a GLES2 project to HTML5, WebGL 1.0 will be used. WebGL 1.0
+doesn't support dynamic loops, so shaders using those won't work there.
+
 Unimplemented functionality
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -111,10 +122,10 @@ The following functionality is currently unavailable on the HTML5 platform:
  -  Threads
  -  GDNative
  -  C#
- -  Clipboard synchronisation between engine and operating system
+ -  Clipboard synchronization between engine and operating system
  -  Networking other than :ref:`class_HTTPClient` and :ref:`class_WebSocketClient`
 
-.. tip:: Check the `list of open HTML5 issues on Github
+.. tip:: Check the `list of open HTML5 issues on GitHub
          <https://github.com/godotengine/godot/issues?q=is:open+is:issue+label:platform:html5>`__
          to see if the functionality you're interested in has an issue yet. If
          not, open one to communicate your interest.

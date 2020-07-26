@@ -17,8 +17,8 @@ In this guide you learn to:
 -  Call functions with the powerful Call Function Tracks
 
 In Godot, you can animate anything available in the Inspector, such as
-Node transforms, sprites, UI elements, particles, visibility and color 
-of materials, and so on. You can also modify values of script variables 
+Node transforms, sprites, UI elements, particles, visibility and color
+of materials, and so on. You can also modify values of script variables
 and call any function.
 
 Create an AnimationPlayer node
@@ -212,7 +212,7 @@ the end.
    Animation loop
 
 If you set the animation length to 4 seconds now, the animation moves
-back and forth. You can change this behaviour if you change the track's
+back and forth. You can change this behavior if you change the track's
 loop mode. This is covered in the next chapter.
 
 Track settings

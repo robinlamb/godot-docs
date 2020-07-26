@@ -16,6 +16,9 @@ For compiling under macOS, the following is required:
   (or the more lightweight Command Line Tools for Xcode).
 - *Optional* - `yasm <https://yasm.tortall.net/>`_ (for WebM SIMD optimizations).
 
+If you are building the ``master`` branch:
+- Download and install the `Vulkan SDK for macOS <https://vulkan.lunarg.com/sdk/home>`__.
+
 .. note:: If you have `Homebrew <https://brew.sh/>`_ installed, you can easily
           install SCons and yasm using the following command::
 
@@ -30,9 +33,19 @@ For compiling under macOS, the following is required:
 Compiling
 ---------
 
-Start a terminal, go to the root directory of the engine source code and type::
+Start a terminal, go to the root directory of the engine source code.
 
-    scons platform=osx --jobs=$(sysctl -n hw.logicalcpu)
+To compile for Intel (x86-64) powered Macs, use::
+
+    scons platform=osx arch=x86_64 --jobs=$(sysctl -n hw.logicalcpu)
+
+To compile for Apple Silicon (ARM64) powered Macs, use::
+
+    scons platform=osx arch=arm64 --jobs=$(sysctl -n hw.logicalcpu)
+
+To support both architectures in a single "Universal 2" binary, run the above two commands and then use ``lipo`` to bundle them together::
+
+    lipo -create bin/godot.osx.tools.x86_64 bin/godot.osx.tools.arm64 -output bin/godot.osx.tools.universal
 
 If all goes well, the resulting binary executable will be placed in the
 ``bin/`` subdirectory. This executable file contains the whole engine and
@@ -46,12 +59,30 @@ manager.
 
 To create an ``.app`` bundle like in the official builds, you need to use the
 template located in ``misc/dist/osx_tools.app``. Typically, for an optimized
-editor binary built with ``scons p=osx target=release_debug``::
+editor binary built with ``target=release_debug``::
 
-    user@host:~/godot$ cp -r misc/dist/osx_tools.app ./Godot.app
-    user@host:~/godot$ mkdir -p Godot.app/Contents/MacOS
-    user@host:~/godot$ cp bin/godot.osx.tools.64 Godot.app/Contents/MacOS/Godot
-    user@host:~/godot$ chmod +x Godot.app/Contents/MacOS/Godot
+    cp -r misc/dist/osx_tools.app ./Godot.app
+    mkdir -p Godot.app/Contents/MacOS
+    cp bin/godot.osx.opt.tools.universal Godot.app/Contents/MacOS/Godot
+    chmod +x Godot.app/Contents/MacOS/Godot
+
+If you are building the ``master`` branch, additionally copy the Vulkan library:
+
+    mkdir -p Godot.app/Contents/Frameworks
+    cp <Vulkan SDK path>/macOS/libs/libMoltenVK.dylib Godot.app/Contents/Frameworks/libMoltenVK.dylib
+
+Compiling a headless/server build
+---------------------------------
+
+To compile a *headless* build which provides editor functionality to export
+projects in an automated manner, use::
+
+    scons platform=server tools=yes target=release_debug --jobs=$(sysctl -n hw.logicalcpu)
+
+To compile a *server* build which is optimized to run dedicated game servers,
+use::
+
+    scons platform=server tools=no target=release --jobs=$(sysctl -n hw.logicalcpu)
 
 Cross-compiling for macOS from Linux
 ------------------------------------
@@ -65,7 +96,7 @@ Clone the `OSXCross repository <https://github.com/tpoechtrager/osxcross>`__
 somewhere on your machine (or download a ZIP file and extract it somewhere),
 e.g.::
 
-    user@host:~$ git clone --depth=1 https://github.com/tpoechtrager/osxcross.git "$HOME/osxcross"
+    git clone --depth=1 https://github.com/tpoechtrager/osxcross.git "$HOME/osxcross"
 
 1. Follow the instructions to package the SDK:
    https://github.com/tpoechtrager/osxcross#packaging-the-sdk
@@ -76,12 +107,12 @@ After that, you will need to define the ``OSXCROSS_ROOT`` as the path to
 the OSXCross installation (the same place where you cloned the
 repository/extracted the zip), e.g.::
 
-    user@host:~$ export OSXCROSS_ROOT="$HOME/osxcross"
+    export OSXCROSS_ROOT="$HOME/osxcross"
 
 Now you can compile with SCons like you normally would::
 
-    user@host:~/godot$ scons platform=osx
+    scons platform=osx
 
 If you have an OSXCross SDK version different from the one expected by the SCons buildsystem, you can specify a custom one with the ``osxcross_sdk`` argument::
 
-    user@host:~/godot$ scons platform=osx osxcross_sdk=darwin15
+    scons platform=osx osxcross_sdk=darwin15

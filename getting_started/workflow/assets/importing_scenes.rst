@@ -22,7 +22,7 @@ Godot supports the following 3D *scene file formats*:
 
 Just copy the scene file together with the texture to the project repository, and Godot will do a full import.
 
-It is important that the mesh is not deformed by bones when exporting. Make sure that the skeleton is reset to its T-pose 
+It is important that the mesh is not deformed by bones when exporting. Make sure that the skeleton is reset to its T-pose
 or default rest pose before exporting with your favorite 3D editor.
 
 Exporting DAE files from Maya and 3DS Max
@@ -38,7 +38,7 @@ with the latest version of the software.
 Exporting glTF 2.0 files from Blender
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-There are three ways to export glTF files from Blender. As a glTF binary (``.glb`` file), glTF embedded (``.gltf`` file), 
+There are three ways to export glTF files from Blender. As a glTF binary (``.glb`` file), glTF embedded (``.gltf`` file),
 and with textures (``gltf`` + ``.bin`` + textures).
 
 glTF binary files are the smallest of the three options. They include the mesh and textures set up in Blender.
@@ -61,7 +61,8 @@ Blender has built-in COLLADA support, but it does not work properly for the need
 and should not be used as is.
 
 Godot provides a `Blender plugin <https://github.com/godotengine/collada-exporter>`_
-that will correctly export COLLADA scenes for use in Godot.
+that will correctly export COLLADA scenes for use in Godot. It does not work in Blender 2.8 or
+newer, but there are plans to update it in the future.
 
 Exporting ESCN files from Blender
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -69,7 +70,8 @@ Exporting ESCN files from Blender
 The most powerful one, called `godot-blender-exporter
 <https://github.com/godotengine/godot-blender-exporter>`__.
 It uses a .escn file, which is kind of another name for a .tscn file (Godot scene file);
-it keeps as much information as possible from a Blender scene.
+it keeps as much information as possible from a Blender scene. However, it is considered
+experimental.
 
 The ESCN exporter has a detailed `document <escn_exporter/index.html>`__ describing
 its functionality and usage.
@@ -364,11 +366,13 @@ Remove nodes (-noimp)
 Node names that have this suffix will be removed at import time, no
 matter what their type is. They will not appear in the imported scene.
 
-Create collisions (-col, -colonly, -convcolonly)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Create collisions (-col, -convcol, -colonly, -convcolonly)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Option "-col" will work only for Mesh nodes. If it is detected, a child
 static collision node will be added, using the same geometry as the mesh.
+
+Option "-convcol" will create a :ref:`class_convexpolygonshape` instead of a :ref:`class_concavepolygonshape`.
 
 However, it is often the case that the visual geometry is too complex or
 too un-smooth for collisions, which ends up not working well.
@@ -377,7 +381,7 @@ To solve this, the "-colonly" modifier exists, which will remove the mesh upon
 import and create a :ref:`class_staticbody` collision instead.
 This helps the visual mesh and actual collision to be separated.
 
-Option "-convcolonly" will create a :ref:`class_convexpolygonshape` instead of a :ref:`class_concavepolygonshape`.
+Option "-convcolonly" works in a similar way but will create a :ref:`class_convexpolygonshape` instead.
 
 Option "-colonly" can also be used with Blender's empty objects.
 On import, it will create a :ref:`class_staticbody` with

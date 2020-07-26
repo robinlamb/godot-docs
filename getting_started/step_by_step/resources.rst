@@ -152,7 +152,7 @@ Creating your own resources
 
 Like any Object in Godot, users can also script Resources. Resource scripts
 inherit the ability to freely translate between object properties and serialized
-text or binary data (/*.tres, /*.res). They also inherit the reference-counting
+text or binary data (\*.tres, \*.res). They also inherit the reference-counting
 memory management from the Reference type.
 
 This comes with many distinct advantages over alternative data
@@ -179,38 +179,6 @@ and :ref:`Resource <class_Resource>` features:
 - Godot Engine's Inspector renders and edits Resource files out-of-the-box. As such, users often do not need to implement custom logic to visualize or edit their data. To do so, double-click the resource file in the FileSystem dock or click the folder icon in the Inspector and open the file in the dialog.
 
 - They can extend **other** resource types besides just the base Resource.
-
-.. warning::
-
-    Resources and Dictionaries are both passed by reference, but only Resources are
-    reference-counted. This means that if a Dictionary is passed between objects and
-    the first object is deleted, all other objects' references to the Dictionary will
-    be invalidated. Conversely, Resources will not be freed from memory until *all* the 
-    objects are deleted.
-
-    .. tabs::
-      .. code-tab:: gdscript GDScript
-
-        extends Node
-
-        class MyObject:
-            extends Object
-            var dict = {}
-
-        func _ready():
-            var obj1 = MyObject.new()
-            var obj2 = MyObject.new()
-            obj1.dict.greeting = "hello"
-            obj2.dict = obj1.dict             # 'obj2.dict' now references 'obj1's Dictionary.
-            obj1.free()                       # 'obj1' is freed and the Dictionary too!
-            print(obj2.dict.greeting)         # Error! 'greeting' index accessed on null instance!
-
-            # To avoid this, we must manually duplicate the Dictionary.
-            obj1 = MyObject.new()
-            obj1.dict.greeting = "hello"
-            obj2.dict = obj1.dict.duplicate() # Now we are passing a copy, not a reference.
-            obj1.free()                       # obj2's Dictionary still exists.
-            print(obj2.dict.greeting)         # Prints 'hello'.
 
 Godot makes it easy to create custom Resources in the Inspector.
 

@@ -170,7 +170,7 @@ as well as how it interacts with other nodes: children, parent, siblings,
 and so on. The local scope of the script is the node. In other words, the script
 inherits the functions provided by that node.
 
-.. image:: /img/brainslug.jpg
+.. image:: img/brainslug.jpg
 
 
 .. _doc_scripting_handling_a_signal:
@@ -331,7 +331,7 @@ Also, remember that nodes are referenced by name, not by type.
 
 .. note::
 
-    The right-hand panel of the connect dialogue is for binding specific
+    The 'advanced' panel of the connect dialogue is for binding specific
     values to the connected function's parameters. You can add and remove
     values of different types.
 

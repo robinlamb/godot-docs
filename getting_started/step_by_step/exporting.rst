@@ -29,19 +29,19 @@ be treated the same as a touch event, we'll convert the game to a click-and-move
 input style.
 
 By default Godot emulates mouse input from touch input. That means if anything
-is coded to happen on a mouse event, touch will trigger it as well. Godot can also 
+is coded to happen on a mouse event, touch will trigger it as well. Godot can also
 emulate touch input from mouse clicks, which we will need to be able to keep playing
-our game on our computer after we switch to touch input. In the "Project Settings" 
-under *Input Devices* and *Pointing*, set *Emulate Touch From Mouse* to "On". 
+our game on our computer after we switch to touch input. In the "Project Settings"
+under *Input Devices* and *Pointing*, set *Emulate Touch From Mouse* to "On".
 
 .. image:: img/export_touchsettings.png
 
 We also want to ensure that the game scales consistently on different-sized screens,
-so in the project settings go to *Display*, then click on *Window*. In the *Stretch* 
-options, set *Mode* to "2d" and *Aspect* to "keep". 
+so in the project settings go to *Display*, then click on *Window*. In the *Stretch*
+options, set *Mode* to "2d" and *Aspect* to "keep".
 
 Since we are already in the *Window* settings, we should also set under *Handheld*
-the *Orientation* to "portrait". 
+the *Orientation* to "portrait".
 
 .. image:: img/export_handheld_stretchsettings.png
 
@@ -84,9 +84,7 @@ changed:
         var velocity = Vector2()
         # Move towards the target and stop when close.
         if position.distance_to(target) > 10:
-            velocity = (target - position).normalized() * speed
-        else:
-            velocity = Vector2()
+            velocity = target - position
 
     # Remove keyboard controls.
     #    if Input.is_action_pressed("ui_right"):
@@ -106,14 +104,14 @@ changed:
 
         position += velocity * delta
         # We still need to clamp the player's position here because on devices that don't
-        # match your game's aspect ratio, Godot will try to maintain it as much as possible 
+        # match your game's aspect ratio, Godot will try to maintain it as much as possible
         # by creating black borders, if necessary.
         # Without clamp(), the player would be able to move under those borders.
         position.x = clamp(position.x, 0, screen_size.x)
         position.y = clamp(position.y, 0, screen_size.y)
 
         if velocity.x != 0:
-            $AnimatedSprite.animation = "right"
+            $AnimatedSprite.animation = "walk"
             $AnimatedSprite.flip_v = false
             $AnimatedSprite.flip_h = velocity.x < 0
         elif velocity.y != 0:
@@ -172,11 +170,7 @@ changed:
             // Move towards the target and stop when close.
             if (Position.DistanceTo(_target) > 10)
             {
-                velocity = (_target - Position).Normalized() * Speed;
-            }
-            else
-            {
-                velocity = new Vector2();
+                velocity = _target - Position;
             }
 
             // Remove keyboard controls.
@@ -216,7 +210,7 @@ changed:
             // We still need to clamp the player's position here because on devices that don't
             // match your game's aspect ratio, Godot will try to maintain it as much as possible
             // by creating black borders, if necessary.
-            // Without clamp(), the player would be able to move under those borders. 
+            // Without clamp(), the player would be able to move under those borders.
             Position = new Vector2(
                 x: Mathf.Clamp(Position.x, 0, _screenSize.x),
                 y: Mathf.Clamp(Position.y, 0, _screenSize.y)
@@ -224,7 +218,7 @@ changed:
 
             if (velocity.x != 0)
             {
-                animatedSprite.Animation = "right";
+                animatedSprite.Animation = "walk";
                 animatedSprite.FlipV = false;
                 animatedSprite.FlipH = velocity.x < 0;
             }
@@ -245,8 +239,8 @@ changed:
 Setting a main scene
 --------------------
 
-The main scene is the one that your game will start in. In *Project -> Project 
-Settings -> Application -> Run*, set *Main Scene* to "Main.tscn" by clicking 
+The main scene is the one that your game will start in. In *Project -> Project
+Settings -> Application -> Run*, set *Main Scene* to "Main.tscn" by clicking
 the folder icon and selecting it.
 
 Export templates
@@ -325,7 +319,7 @@ Before you can export your project for Android, you must download the following
 software:
 
 * Android SDK: https://developer.android.com/studio/
-* Java JDK: http://www.oracle.com/technetwork/java/javase/downloads/index.html
+* Open JDK(version 8 is required, more recent versions won't work): https://adoptopenjdk.net/index.html
 
 When you run Android Studio for the first time, click on *Configure -> SDK Manager*
 and install "Android SDK Platform Tools". This installs the `adb` command-line
@@ -345,7 +339,7 @@ your system and the location of the keystore you just created.
 .. image:: img/export_editor_android_settings.png
 
 Now you're ready to export. Click on *Project -> Export* and add a preset
-for Android (see above). Select the Android Presets and under *Options* go to 
+for Android (see above). Select the Android Presets and under *Options* go to
 *Screen* and set *Orientation* to "Portrait".
 
 Click the "Export Project" button and Godot will build an APK you can download
@@ -420,5 +414,5 @@ disable it by setting "Export With Debug" off when you export the project.
 .. note:: While WASM is supported in all major browsers, it is still an emerging
           technology and you may find some things that don't work. Make sure
           you have updated your browser to the most recent version, and report
-          any bugs you find at the `Godot Github repository
+          any bugs you find at the `Godot GitHub repository
           <https://github.com/godotengine/godot/issues>`_.

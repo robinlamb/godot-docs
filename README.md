@@ -8,7 +8,7 @@ They are meant to be parsed with the [Sphinx](https://www.sphinx-doc.org/) docum
 
 **Pull Requests should use the `master` branch by default. Only make Pull Requests against other branches (e.g. `2.1` or `3.0`) if your changes only apply to that specific version of Godot.**
 
-Though arguably less convenient to edit than a wiki, this git repository is meant to receive pull requests to always improve the documentation, add new pages, etc. Having direct access to the source files in a revision control system is a big plus to ensure the quality of our documentation.
+Though arguably less convenient to edit than a wiki, this Git repository is meant to receive pull requests to always improve the documentation, add new pages, etc. Having direct access to the source files in a revision control system is a big plus to ensure the quality of our documentation.
 
 ### Editing existing pages
 
@@ -69,7 +69,7 @@ Building the documentation requires at least 8 GB of RAM to be done without swap
 # On Linux/macOS
 make html SPHINXOPTS=-j2
 
-# On Windows
+# On Windows
 set SPHINXOPTS=-j2 && make html
 ```
 
@@ -109,8 +109,7 @@ Execute this from the root folder of this repository:
 ```sh
 virtualenv --system-site-packages env/
 . env/bin/activate
-pip3 install sphinx
-pip3 install sphinx_rtd_theme
+pip install -r requirements.txt
 ```
 
 Then do `make html` like above.

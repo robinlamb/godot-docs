@@ -44,6 +44,23 @@ They can then use a separate folder to store built levels that use them.
     /characters/npcs/suzanne/suzanne.png
     /levels/riverdale/riverdale.scn
 
+Style guide
+-----------
+
+For consistency across projects, we recommend following these guidelines:
+
+- Use **snake_case** for folder and file names (with the exception of C#
+  scripts). This sidesteps case sensitivity issues that can crop up after
+  exporting a project on Windows. C# scripts are an exception to this rule,
+  as the convention is to name them after the class name which should be
+  in PascalCase.
+- Use **PascalCase** for node names, as this matches built-in node casing.
+- In general, keep third-party resources in a top-level ``addons/`` folder, even
+  if they aren't editor plugins. This makes it easier to track which files are
+  third-party. There are some exceptions to this rule; for instance, if you use
+  third-party game assets for a character, it makes more sense to include them
+  within the same folder as the character scenes and scripts.
+
 Importing
 ---------
 
@@ -72,3 +89,34 @@ using the ``load()`` and ``preload()`` methods.
 
 Ignoring a folder will also automatically hide it from the FileSystem dock,
 which can be useful to reduce clutter.
+
+Case sensitivity
+----------------
+
+Windows and recent macOS versions use case-insensitive filesystems by default,
+whereas Linux distributions use a case-sensitive filesystem by default.
+This can cause issues after exporting a project, since Godot's PCK virtual
+filesystem is case-sensitive. To avoid this, it's recommended to stick to
+``snake_case`` naming for all files in the project (and lowercase characters
+in general).
+
+.. note::
+
+    You can break this rule when style guides say otherwise (such as the
+    C# style guide). Still, be consistent to avoid mistakes.
+
+On Windows 10, to further avoid mistakes related to case sensitivity,
+you can also make the project folder case-sensitive. After enabling the Windows
+Subsystem for Linux feature, run the following command in a PowerShell window::
+
+    # To enable case-sensitivity:
+    fsutil file setcasesensitiveinfo <path to project folder> enable
+
+    # To disable case-sensitivity:
+    fsutil file setcasesensitiveinfo <path to project folder> disable
+
+If you haven't enabled the Windows Subsystem for Linux, you can enter the
+following line in a PowerShell window *running as Administrator* then reboot
+when asked::
+
+    Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux

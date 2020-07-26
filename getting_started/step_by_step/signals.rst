@@ -14,7 +14,7 @@ send out a message that other nodes can listen for and respond to. For example,
 rather than continuously checking a button to see if it's being pressed, the
 button can emit a signal when it's pressed.
 
-.. note:: You can read more about the observer pattern here: http://gameprogrammingpatterns.com/observer.html
+.. note:: You can read more about the observer pattern here: https://gameprogrammingpatterns.com/observer.html
 
 Signals are a way to *decouple* your game objects, which leads to better organized
 and more manageable code. Instead of forcing game objects to expect other objects
@@ -63,7 +63,7 @@ node.
 .. warning:: The target node *must* have a script attached or you'll receive
              an error message.
 
-On the right side, you can bind an arbitrary number of arguments of (possibly) different
+If you toggle the Advanced menu, you'll see on the right side that you can bind an arbitrary number of arguments of (possibly) different
 types. This can be useful when you have more than one signal connected to the same method,
 as each signal propagation will result in different values for those extra call arguments.
 

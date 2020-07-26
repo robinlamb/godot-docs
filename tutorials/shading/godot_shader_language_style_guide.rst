@@ -38,11 +38,11 @@ Here is a complete shader example based on these guidelines:
 
     void fragment() {
         vec3 c = textureLod(SCREEN_TEXTURE, SCREEN_UV, 0.0).rgb;
-        
+
         c.rgb = mix(vec3(0.0), c.rgb, brightness);
         c.rgb = mix(vec3(0.5), c.rgb, contrast);
         c.rgb = mix(vec3(dot(vec3(1.0), c.rgb) * 0.33333), c.rgb, saturation);
-        
+
         COLOR.rgb = c;
     }
 
@@ -326,16 +326,16 @@ We suggest to organize shader code this way:
 
     01. shader type declaration
     02. render mode declaration
-    02. // docstring
+    03. // docstring
 
-    03. uniforms
-    04. constants
-    05. varyings
-    
-    06. other functions
-    07. vertex() function
-    08. fragment() function
-    09. light() function
+    04. uniforms
+    05. constants
+    06. varyings
+
+    07. other functions
+    08. vertex() function
+    09. fragment() function
+    10. light() function
 
 We optimized the order to make it easy to read the code from top to bottom, to
 help developers reading the code for the first time understand how it works, and

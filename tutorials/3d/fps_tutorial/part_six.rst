@@ -894,9 +894,9 @@ Now that we've finished our changes to ``SimpleAudioPlayer.gd``, we now need to 
 
     # You will need to provide your own sound files.
     var audio_clips = {
-        "Pistol_shot":null, #preload("res://path_to_your_audio_here!")
-        "Rifle_shot":null, #preload("res://path_to_your_audio_here!")
-        "Gun_cock":null, #preload("res://path_to_your_audio_here!")
+        "Pistol_shot": null, #preload("res://path_to_your_audio_here!")
+        "Rifle_shot": null, #preload("res://path_to_your_audio_here!")
+        "Gun_cock": null, #preload("res://path_to_your_audio_here!")
     }
 
     const SIMPLE_AUDIO_PLAYER_SCENE = preload("res://Simple_Audio_Player.tscn")
@@ -1014,9 +1014,9 @@ At this point, you have a good base to build more complicated FPS games.
           Other than that, the source is exactly the same, just with helpful comments explaining what
           each part does.
 
-.. tip:: The finished project source is hosted on Github as well: https://github.com/TwistedTwigleg/Godot_FPS_Tutorial
+.. tip:: The finished project source is hosted on GitHub as well: https://github.com/TwistedTwigleg/Godot_FPS_Tutorial
 
-         **Please note that the code in Github may or may not be in sync with the tutorial in the documentation**.
+         **Please note that the code in GitHub may or may not be in sync with the tutorial in the documentation**.
 
          The code in the documentation is likely better managed and/or more up to date.
          If you are unsure of which to use, use the project(s) provided in the documentation, as they are maintained by the Godot community.
