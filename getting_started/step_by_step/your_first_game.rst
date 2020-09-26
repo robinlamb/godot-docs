@@ -61,7 +61,7 @@ Dock in the lower left corner:
 Player scene
 ------------
 
-The first scene we will make defines the ``Player`` object. One of the benefits
+The first scene will define the ``Player`` object. One of the benefits
 of creating a separate Player scene is that we can test it separately, even
 before we've created other parts of the game.
 
@@ -704,8 +704,9 @@ you will see some new buttons at the top of the editor:
 
 Select the middle one ("Add Point") and draw the path by clicking to add
 the points at the corners shown. To have the points snap to the grid, make
-sure "Use Grid Snap" is selected. This option can be found to the left of
-the "Lock" button, appearing as a magnet next to some intersecting lines.
+sure "Use Grid Snap" and "Use Snap" are both selected. These options can be 
+found to the left of the "Lock" button, appearing as a magnet next to some
+dots and intersecting lines, respectively.
 
 .. image:: img/grid_snap_button.png
 

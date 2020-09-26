@@ -284,7 +284,7 @@ Literals
 +--------------------------+----------------------------------------+
 | ``45``                   | Base 10 integer                        |
 +--------------------------+----------------------------------------+
-| ``0x8F51``               | Base 16 (hexadecimal) integer          |
+| ``0x8f51``               | Base 16 (hexadecimal) integer          |
 +--------------------------+----------------------------------------+
 | ``0b101010``             | Base 2 (binary) integer                |
 +--------------------------+----------------------------------------+
@@ -298,6 +298,14 @@ Literals
 +--------------------------+----------------------------------------+
 | ``$NodePath``            | Shorthand for ``get_node("NodePath")`` |
 +--------------------------+----------------------------------------+
+
+Integers and floats can have their numbers separated with ``_`` to make them more readable.
+The following ways to write numbers are all valid::
+
+    12_345_678  # Equal to 12345678.
+    3.141_592_7  # Equal to 3.1415927.
+    0x8080_0000_ffff  # Equal to 0x80800000ffff.
+    0b11_00_11_00  # Equal to 0b11001100.
 
 Comments
 ~~~~~~~~
@@ -646,8 +654,12 @@ the scene tree::
 Constants
 ~~~~~~~~~
 
-Constants are similar to variables, but must be constants or constant
-expressions and must be assigned on initialization.
+Constants are values you cannot change when the game is running.
+Their value must be known at compile-time. Using the
+``const`` keyword allows you to give a constant value a name. Trying to assign a
+value to a constant after it's declared will give you an error.
+
+We recommend using constants whenever a value is not meant to change.
 
 ::
 
@@ -1317,7 +1329,7 @@ If a class inherits from :ref:`class_Reference`, then instances will be
 freed when no longer in use. No garbage collector exists, just
 reference counting. By default, all classes that don't define
 inheritance extend **Reference**. If this is not desired, then a class
-must inherit :ref:`class_Object` manually and must call instance.free(). To
+must inherit :ref:`class_Object` manually and must call ``instance.free()``. To
 avoid reference cycles that can't be freed, a ``weakref`` function is
 provided for creating weak references.
 

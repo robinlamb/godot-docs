@@ -418,6 +418,53 @@ characters in a given string. See the examples below:
     # Both quote styles would require 2 escapes; prefer double quotes if it's a tie.
     print("'hello' \"world\"")
 
+Numbers
+~~~~~~~
+
+Don't omit the leading or trailing zero in floating-point numbers. Otherwise,
+this makes them less readable and harder to distinguish from integers at a
+glance.
+
+**Good**::
+
+    var float_number = 0.234
+    var other_float_number = 13.0
+
+**Bad**::
+
+    var float_number = .234
+    var other_float_number = 13.
+
+Use lowercase for letters in hexadecimal numbers, as their lower height makes
+the number easier to read.
+
+**Good**::
+
+    var hex_number = 0xfb8c0b
+
+**Bad**::
+
+    var hex_number = 0xFB8C0B
+
+Take advantage of GDScript's underscores in literals to make large numbers more
+readable.
+
+**Good**::
+
+    var large_number = 1_234_567_890
+    var large_hex_number = 0xffff_f8f8_0000
+    var large_bin_number = 0b1101_0010_1010
+    # Numbers lower than 1000000 generally don't need separators.
+    var small_number = 12345
+
+**Bad**::
+
+    var large_number = 1234567890
+    var large_hex_number = 0xfffff8f80000
+    var large_bin_number = 0b110100101010
+    # Numbers lower than 1000000 generally don't need separators.
+    var small_number = 12_345
+
 .. _naming_conventions:
 
 Naming conventions
@@ -640,7 +687,7 @@ Start with the ``_init()`` callback method, that the engine will call upon
 creating the object in memory. Follow with the ``_ready()`` callback, that Godot
 calls when it adds a node to the scene tree.
 
-These function should come first because they show how the object is
+These functions should come first because they show how the object is
 initialized.
 
 Other built-in virtual callbacks, like ``_unhandled_input()`` and
@@ -688,19 +735,39 @@ Static typing
 
 Since Godot 3.1, GDScript supports :ref:`optional static typing<doc_gdscript_static_typing>`.
 
-Type hints
-~~~~~~~~~~
+Declared types
+~~~~~~~~~~~~~~
 
-Place the colon right after the variable's name, without a space, and let the
-GDScript compiler infer the variable's type when possible.
+To declare a variable's type, use ``<variable>: <type>``:
+
+::
+
+   var health: int = 0
+
+To declare the return type of a function, use ``-> <type>``:
+
+::
+
+   func heal(amount: int) -> void:
+
+Inferred types
+~~~~~~~~~~~~~~
+
+In most cases you can let the compiler infer the type, using ``:=``:
+
+::
+   var health := 0  # The compiler will use the int type.
+
+However, in a few cases when context is missing, the compiler falls back to
+the function's return type. For example, ``get_node()`` cannot infer a type
+unless the scene or file of the node is loaded in memory. In this case, you
+should set the type explicitly.
 
 **Good**:
 
 ::
 
    onready var health_bar: ProgressBar = get_node("UI/LifeBar")
-
-   var health := 0 # The compiler will use the int type.
 
 **Bad**:
 
@@ -709,15 +776,3 @@ GDScript compiler infer the variable's type when possible.
    # The compiler can't infer the exact type and will use Node
    # instead of ProgressBar.
    onready var health_bar := get_node("UI/LifeBar")
-
-When you let the compiler infer the type hint, write the colon and equal signs together: ``:=``.
-
-::
-
-   var health := 0 # The compiler will use the int type.
-
-Add a space on either sides of the return type arrow when defining functions.
-
-::
-
-   func heal(amount: int) -> void:
